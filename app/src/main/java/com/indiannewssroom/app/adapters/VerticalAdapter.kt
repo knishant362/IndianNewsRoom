@@ -112,6 +112,15 @@ class VerticalAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 //        diffUtilResult.dispatchUpdatesTo(this)
     }
 
+    fun setDataOther(data: List<PostData>) {
+//        val myDiffUtil = PostDiffUtils(postdata, data)
+//        val diffUtilResult = DiffUtil.calculateDiff(myDiffUtil)
+        postdata.clear()
+        postdata.addAll(data)
+//        diffUtilResult.dispatchUpdatesTo(this)
+    }
+
+
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }

@@ -15,6 +15,7 @@ import com.indiannewssroom.app.adapters.VerticalAdapter
 import com.indiannewssroom.app.data.NetworkResults
 import com.indiannewssroom.app.databinding.FragmentABinding
 import com.indiannewssroom.app.model.PostData
+import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_A
 import com.indiannewssroom.app.util.Constants.Companion.tv_and_serial
 import com.indiannewssroom.app.viewmodel.MainViewModel
 
@@ -36,10 +37,10 @@ class FragmentA : Fragment() {
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        /** here tv_and_serial is a Pair<>()  */
+        /** here tv_and_serial is a Pair<>() */
 
-        mainViewModel.apiCall(tv_and_serial.second, perPage)
-        mainViewModel.mediatorLiveData.observe(viewLifecycleOwner, {
+        mainViewModel.apiCall(tv_and_serial.second, perPage,FRAGMENT_NAME_A)
+        mainViewModel.postResponseA.observe(viewLifecycleOwner, {
             val postdata = it.data
             if (postdata!=null)
             mAdapter.setData(postdata)

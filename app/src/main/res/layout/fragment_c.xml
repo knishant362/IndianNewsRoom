@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cg_fragment_B"
+                android:id="@+id/cg_fragment_c"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:checkedChip="@+id/chip_all"
@@ -38,46 +38,52 @@
                     android:text="All" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_national_news"
+                    android:id="@+id/chip_spiritual"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="अध्यात्म" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_international_news"
+                    android:id="@+id/chip_astrology"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="राशिफल" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_viral_news"
+                    android:id="@+id/chip_vastu_shastra"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="वायरल" />
+                    android:text="वास्तु" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_social_media_news"
+                    android:id="@+id/chip_lent_and_festivals"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="सोशल मीडिया" />
+                    android:text="व्रत और त्यौहार" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_chanakya_niti"
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="चाणक्य नीति" />
 
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
 
     </HorizontalScrollView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="religion"
-        android:textSize="30sp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragmentRecyclerC"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/sv_meal_type" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

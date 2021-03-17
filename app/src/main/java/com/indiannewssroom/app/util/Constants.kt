@@ -39,6 +39,19 @@ class Constants {
         val digital_duniya : Pair<String, String> = Pair("डिजिटल दुनिया","2692")
         val general_knowledge : Pair<String, String> = Pair("सामान्य ज्ञान","389")
 
+        const val FRAGMENT_NAME_A = "A"
+        const val FRAGMENT_NAME_B = "B"
+        const val FRAGMENT_NAME_C = "C"
+        const val FRAGMENT_NAME_D = "D"
+        const val FRAGMENT_NAME_E = "E"
+        const val FRAGMENT_NAME_F = "F"
+        const val FRAGMENT_NAME_G = "G"
+        const val FRAGMENT_NAME_H = "H"
+
+        const val TYPE_SINGLE = "single"
+        const val TYPE_HORIZONTAL = "horizontal"
+        const val TYPE_VERTICAL = "vertical"
+
     }
 
 }
