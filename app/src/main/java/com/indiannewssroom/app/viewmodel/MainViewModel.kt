@@ -3,8 +3,8 @@ package com.indiannewssroom.app.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import com.indiannewssroom.app.data.NetworkResults
-import com.indiannewssroom.app.repository.RemoteDataSource
 import com.indiannewssroom.app.model.PostData
+import com.indiannewssroom.app.repository.RemoteDataSource
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_A
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_B
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_C
@@ -52,20 +52,21 @@ class MainViewModel() : ViewModel(){
     var horizontalList = arrayListOf<PostData>()
     var verticalList = arrayListOf<PostData>()
     private val postOnHome = 5
+    val isFirst = false
 
-    init{
-        apiCallCategory("29", TYPE_HORIZONTAL,postOnHome)
-        apiCallCategory("2697", TYPE_VERTICAL,postOnHome)
-        apiCallCategory("2701", TYPE_VERTICAL,postOnHome)
-        apiCallCategory("30", TYPE_VERTICAL,postOnHome)
-        apiCallCategory("2698", TYPE_VERTICAL,postOnHome)
-    }
+//    init{
+//        apiCallCategory("29", TYPE_HORIZONTAL,postOnHome)
+//        apiCallCategory("2697", TYPE_VERTICAL,postOnHome)
+//        apiCallCategory("2701", TYPE_VERTICAL,postOnHome)
+//        apiCallCategory("30", TYPE_VERTICAL,postOnHome)
+//        apiCallCategory("2698", TYPE_VERTICAL,postOnHome)
+//    }
 
     fun apiCall(category: String, per_page: Int, fragmentName: String) = viewModelScope.launch {
         safeApiCallCategory(category, "single", per_page, fragmentName)
     }
 
-    private fun apiCallCategory(category: String, type : String, per_page: Int) = viewModelScope.launch {
+    fun apiCallCategory(category: String, type : String, per_page: Int) = viewModelScope.launch {
         safeApiCallCategory(category, type, per_page)
     }
 

@@ -9,8 +9,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/row_cardView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="6dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,15 +26,16 @@
 
             <ImageView
                 android:id="@+id/imgPost"
-                android:layout_width="170dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:layout_margin="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="Post Image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars"
-                android:contentDescription="Post Image" />
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/txtPostTitle"
@@ -47,13 +47,23 @@
                 android:maxLines="3"
                 android:text="Nishant kmar , hello there my majdf;asfasfewreererere"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imgPost"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/imgPost" />
+
+            <TextView
+                android:id="@+id/txtUpldTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgPost"
+                app:layout_constraintEnd_toEndOf="@+id/txtPostTitle"
+                app:layout_constraintStart_toStartOf="@+id/txtPostTitle" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

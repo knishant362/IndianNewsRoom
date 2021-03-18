@@ -7,10 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.b.FragmentB">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.todkars.shimmer.ShimmerRecyclerView
         android:id="@+id/fragmentRecyclerB"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:orientation="vertical"
+        app:shimmer_recycler_item_count="3"
+        app:shimmer_recycler_layout="@layout/placeholder_row_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

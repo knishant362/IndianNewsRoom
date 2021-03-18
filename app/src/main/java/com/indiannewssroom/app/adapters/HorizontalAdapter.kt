@@ -1,16 +1,11 @@
 package com.indiannewssroom.app.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.indiannewssroom.app.databinding.HorizontalPostRowLayoutBinding
-import com.indiannewssroom.app.databinding.PostRowLayoutBinding
 import com.indiannewssroom.app.model.PostData
-import com.indiannewssroom.app.util.PostDiffUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -22,12 +17,12 @@ class HorizontalAdapter() : RecyclerView.Adapter<HorizontalAdapter.MyViewHolder>
             RecyclerView.ViewHolder(binding.root) {
 
         fun bind(postData: PostData) {
-            binding.txtposttitle.text = postData.title.rendered
+            binding.txtposttitle.text = postData.title!!.rendered
             binding.imgPostImage.apply {
                 if (postData?.embedded?.wpFeaturedmedia != null){
                     val c = CoroutineScope(Dispatchers.IO)
                     c.run {
-                        load(postData.embedded.wpFeaturedmedia[0].sourceUrl){
+                        load(postData.embedded.wpFeaturedmedia[0]?.sourceUrl){
                             crossfade(600)
                         }
                     }

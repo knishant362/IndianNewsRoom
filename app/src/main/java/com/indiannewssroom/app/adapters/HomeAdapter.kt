@@ -5,15 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.*
 import com.indiannewssroom.app.R
 import com.indiannewssroom.app.model.PostData
-import com.indiannewssroom.app.ui.fragments.home.HomeFragmentDirections
-import com.indiannewssroom.app.util.PostDiffUtils
 
 class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -48,7 +42,7 @@ class HomeAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
     }
 
     private fun setVerticalList(recyclerView: RecyclerView?) {
-        val verticalList = VerticalAdapter()
+        val verticalList = VerticalAdapter(context)
         verticalList.setData(postdatavertical)
         recyclerView?.setHasFixedSize(true)
         recyclerView?.layoutManager = LinearLayoutManager(context)

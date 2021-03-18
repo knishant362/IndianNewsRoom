@@ -42,42 +42,80 @@
         android:id="@+id/nav_fragment_a"
         android:name="com.indiannewssroom.app.ui.fragments.a.FragmentA"
         android:label="fragment_a"
-        tools:layout="@layout/fragment_a" />
+        tools:layout="@layout/fragment_a" >
+
+        <action
+            android:id="@+id/action_nav_fragment_a_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_fragment_b"
         android:name="com.indiannewssroom.app.ui.fragments.b.FragmentB"
         android:label="fragment_b"
-        tools:layout="@layout/fragment_b" />
+        tools:layout="@layout/fragment_b" >
+
+        <action
+            android:id="@+id/action_nav_fragment_b_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_fragment_c"
         android:name="com.indiannewssroom.app.ui.fragments.c.FragmentC"
         android:label="fragment_c"
-        tools:layout="@layout/fragment_c" />
+        tools:layout="@layout/fragment_c" >
+
+        <action
+            android:id="@+id/action_nav_fragment_c_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_fragment_d"
         android:name="com.indiannewssroom.app.ui.fragments.d.FragmentD"
         android:label="fragment_d"
-        tools:layout="@layout/fragment_d" />
+        tools:layout="@layout/fragment_d" >
+        <action
+            android:id="@+id/action_nav_fragment_d_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_fragment_e"
         android:name="com.indiannewssroom.app.ui.fragments.e.FragmentE"
         android:label="fragment_e"
-        tools:layout="@layout/fragment_e" />
+        tools:layout="@layout/fragment_e" >
+
+        <action
+            android:id="@+id/action_nav_fragment_e_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_fragment_g"
         android:name="com.indiannewssroom.app.ui.fragments.g.FragmentG"
         android:label="fragment_g"
-        tools:layout="@layout/fragment_g" />
+        tools:layout="@layout/fragment_g" >
+
+        <action
+            android:id="@+id/action_nav_fragment_g_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_fragment_h"
         android:name="com.indiannewssroom.app.ui.fragments.h.FragmentH"
         android:label="fragment_h"
-        tools:layout="@layout/fragment_h" />
+        tools:layout="@layout/fragment_h" >
+
+        <action
+            android:id="@+id/action_nav_fragment_h_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_fragment_f"
         android:name="com.indiannewssroom.app.ui.fragments.f.FragmentF"
         android:label="fragment_fragment"
-        tools:layout="@layout/fragment_fragment" />
+        tools:layout="@layout/fragment_f" >
+        <action
+            android:id="@+id/action_nav_fragment_f_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.indiannewssroom.app.ui.fragments.details.DetailFragment"

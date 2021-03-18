@@ -1,6 +1,7 @@
 package com.indiannewssroom.app.ui.fragments.b
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,12 @@ import com.indiannewssroom.app.R
 import com.indiannewssroom.app.adapters.VerticalAdapter
 import com.indiannewssroom.app.databinding.FragmentABinding
 import com.indiannewssroom.app.databinding.FragmentBBinding
+import com.indiannewssroom.app.util.Constants
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_B
+import com.indiannewssroom.app.util.Constants.Companion.latest_news
 import com.indiannewssroom.app.util.Constants.Companion.relationship
 import com.indiannewssroom.app.viewmodel.MainViewModel
+import com.todkars.shimmer.ShimmerRecyclerView
 
 class FragmentB : Fragment() {
 
@@ -22,27 +26,51 @@ class FragmentB : Fragment() {
     private var _binding : FragmentBBinding? = null
     private val binding get() = _binding!!
     private lateinit var mAdapter: VerticalAdapter
-    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mRecyclerView: ShimmerRecyclerView
     private var perPage = 10
+    private var myTurn = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         _binding = FragmentBBinding.inflate(inflater, container, false)
-        mAdapter = VerticalAdapter()
+        mAdapter = VerticalAdapter(requireContext())
         mRecyclerView = binding.fragmentRecyclerB
-        mRecyclerView.adapter = mAdapter
-        mRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        /** here tv_and_serial is a Pair<>() */
+        setupRecyclerView()
 
-        mainViewModel.apiCall(relationship.second, perPage,FRAGMENT_NAME_B)
+        firstApiCall()
+
         mainViewModel.postResponseB.observe(viewLifecycleOwner, {
             val postdata = it.data
             if (postdata!=null)
                 mAdapter.setData(postdata)
             mAdapter.notifyDataSetChanged()
+            hideShimmerEffect()
         })
         return binding.root
+    }
+
+    private fun firstApiCall() {
+        /**this apiCall will only launch once(at startup)*/
+        if (myTurn){
+            mainViewModel.apiCall(latest_news.second, perPage, FRAGMENT_NAME_B)
+            Log.d("MYKat", "called")
+            myTurn = mainViewModel.isFirst
+        }
+    }
+
+    private fun setupRecyclerView() {
+        mRecyclerView.adapter = mAdapter
+        mRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        showShimmerEffect()
+    }
+
+    private fun showShimmerEffect() {
+        mRecyclerView.showShimmer()
+    }
+
+    private fun hideShimmerEffect() {
+        mRecyclerView.hideShimmer()
     }
 
 }

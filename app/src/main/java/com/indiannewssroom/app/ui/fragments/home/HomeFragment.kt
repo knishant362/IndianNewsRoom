@@ -15,6 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.indiannewssroom.app.R
 import com.indiannewssroom.app.adapters.HomeAdapter
+import com.indiannewssroom.app.util.Constants
+import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_HOME
+import com.indiannewssroom.app.util.Constants.Companion.TYPE_HORIZONTAL
+import com.indiannewssroom.app.util.Constants.Companion.TYPE_VERTICAL
+import com.indiannewssroom.app.util.Constants.Companion.bollywood_cinema
+import com.indiannewssroom.app.util.Constants.Companion.breaking_news
+import com.indiannewssroom.app.util.Constants.Companion.game_and_player
+import com.indiannewssroom.app.util.Constants.Companion.general_knowledge
+import com.indiannewssroom.app.util.Constants.Companion.viral_news
 import com.indiannewssroom.app.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
@@ -27,6 +36,8 @@ class HomeFragment : Fragment() {
     private var isLoading = true
     private var userScroll = true
     private var pageNo = 1
+    private val postOnHome = 5
+    private var myTurn = true
 
 
     override fun onCreateView(
@@ -47,10 +58,25 @@ class HomeFragment : Fragment() {
         list.add("Vertical")
         homeAdapter.groupData(list)
 
+        firstCall()
         setupHorizontalObserver()
         setupVerticalObserver()
 
         return mView
+    }
+
+    private fun firstCall() {
+
+        if (myTurn){
+            mainViewModel.apiCallCategory(breaking_news.second, TYPE_HORIZONTAL,postOnHome)
+            mainViewModel.apiCallCategory(bollywood_cinema.second, TYPE_VERTICAL,postOnHome)
+            mainViewModel.apiCallCategory(game_and_player.second, TYPE_VERTICAL,postOnHome)
+            mainViewModel.apiCallCategory(viral_news.second, TYPE_VERTICAL,postOnHome)
+            mainViewModel.apiCallCategory(general_knowledge.second, TYPE_VERTICAL,postOnHome)
+            Log.d("Cut12", "called")
+            myTurn = mainViewModel.isFirst
+        }
+
     }
 
     private fun setupVerticalObserver() {

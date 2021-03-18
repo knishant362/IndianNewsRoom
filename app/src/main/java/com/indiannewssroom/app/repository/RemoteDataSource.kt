@@ -1,8 +1,8 @@
 package com.indiannewssroom.app.repository
 
 import com.indiannewssroom.app.data.ApiService
-import com.indiannewssroom.app.util.Constants.Companion.BASE_URL
 import com.indiannewssroom.app.model.PostData
+import com.indiannewssroom.app.util.Constants.Companion.BASE_URL
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -4,8 +4,11 @@ class Constants {
 
     companion object{
         const val BASE_URL = "https://www.indiannewsroom.com"
+        const val INTENT_DATA = "MyIntent"
+        const val BUNDLE_DATA = "MyBundle"
 
         val breaking_news : Pair<String, String> = Pair("ब्रेकिंग न्यूज","2656")
+
         val latest_news : Pair<String, String> = Pair("खबरें","2687")
         val national_news : Pair<String, String> = Pair("देश","2688")
         val international_news : Pair<String, String> = Pair("विदेश","2688")
@@ -20,7 +23,6 @@ class Constants {
         val chanakya_niti : Pair<String, String> = Pair("चाणक्य नीति","2701")
 
         val lifestyle : Pair<String, String> = Pair("लाइफस्टाइल","2694")
-
         val health : Pair<String, String> = Pair("स्वास्थ्य","25")
         val relationship : Pair<String, String> = Pair("रिलेशनशिप","33")
         val fashion_and_style : Pair<String, String> = Pair("फैशन","2696")
@@ -32,13 +34,17 @@ class Constants {
         val tv_and_serial : Pair<String, String> = Pair("टेलीविजन","2693")
         val bollywood_cinema : Pair<String, String> = Pair("बॉलीवुड","32")
         val humour : Pair<String, String> = Pair("हंसी-ठट्ठा","2691")
+
         val dilchasp : Pair<String, String> = Pair("दिलचस्प","26")
 
         val game_and_player : Pair<String, String> = Pair("खेल जगत","30")
+
         val science_and_technology : Pair<String, String> = Pair("विज्ञान और तकनीक","31")
         val digital_duniya : Pair<String, String> = Pair("डिजिटल दुनिया","2692")
+
         val general_knowledge : Pair<String, String> = Pair("सामान्य ज्ञान","389")
 
+        const val FRAGMENT_NAME_HOME = "HOME"
         const val FRAGMENT_NAME_A = "A"
         const val FRAGMENT_NAME_B = "B"
         const val FRAGMENT_NAME_C = "C"
@@ -51,6 +57,7 @@ class Constants {
         const val TYPE_SINGLE = "single"
         const val TYPE_HORIZONTAL = "horizontal"
         const val TYPE_VERTICAL = "vertical"
+
 
     }
 
