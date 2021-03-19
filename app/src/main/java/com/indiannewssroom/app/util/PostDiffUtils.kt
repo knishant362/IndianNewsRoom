@@ -1,10 +1,11 @@
 package com.indiannewssroom.app.util
 
 import androidx.recyclerview.widget.DiffUtil
+import com.indiannewssroom.app.model.PostData
 
-class PostDiffUtils<T>(
-    private val oldList: List<T>,
-    private val newList: List<T>
+class PostDiffUtils(
+    private val oldList: List<PostData>,
+    private val newList: List<PostData>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -16,10 +17,18 @@ class PostDiffUtils<T>(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] === newList[newItemPosition]
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return when {
+            oldList[oldItemPosition].id == newList[newItemPosition].id -> {
+                false
+            }
+            oldList[oldItemPosition].title == newList[newItemPosition].title -> {
+                false
+            }
+            else -> true
+        }
     }
 }

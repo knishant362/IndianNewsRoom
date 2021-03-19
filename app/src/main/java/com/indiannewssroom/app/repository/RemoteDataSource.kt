@@ -19,8 +19,11 @@ class RemoteDataSource {
         return apicall.getPost(categories = pageNo)
     }
 
-    suspend fun getPostCategory(category: String, per_page: Int): Response<List<PostData>> {
-        return apicall.getPostCategory(categories = category , postPer = per_page)
+//    suspend fun getPostCategory(category: String, per_page: Int): Response<List<PostData>> {
+//        return apicall.getPostCategory(categories = category , postPer = per_page)
+//    }
+    suspend fun getPostCategory(perPage: Int, page: Int, category: String ): Response<List<PostData>> {
+        return apicall.getPostCategoryPage(categories = category, page = page, postPer = perPage)
     }
 
 }

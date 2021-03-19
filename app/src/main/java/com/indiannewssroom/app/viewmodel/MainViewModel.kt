@@ -19,7 +19,10 @@ import com.indiannewssroom.app.util.Constants.Companion.TYPE_VERTICAL
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainViewModel() : ViewModel(){
+class MainViewModel : ViewModel(){
+
+//    val _networkText = MutableLiveData<Boolean>()
+//    val networkText : MutableLiveData<Boolean> get() = _networkText
 
     private val _postResponseA = MutableLiveData<NetworkResults<List<PostData>>>()
     val postResponseA : LiveData<NetworkResults<List<PostData>>> get() = _postResponseA
@@ -49,10 +52,11 @@ class MainViewModel() : ViewModel(){
     var postResponseVertical: MutableLiveData<NetworkResults<List<PostData>>> = MutableLiveData()
 
     private val call = RemoteDataSource()
-    var horizontalList = arrayListOf<PostData>()
-    var verticalList = arrayListOf<PostData>()
-    private val postOnHome = 5
+    private var horizontalList = arrayListOf<PostData>()
+    private var verticalList = arrayListOf<PostData>()
     val isFirst = false
+    var networkStatus = false
+    var backOnline = false
 
 //    init{
 //        apiCallCategory("29", TYPE_HORIZONTAL,postOnHome)
@@ -62,26 +66,21 @@ class MainViewModel() : ViewModel(){
 //        apiCallCategory("2698", TYPE_VERTICAL,postOnHome)
 //    }
 
-    fun apiCall(category: String, per_page: Int, fragmentName: String) = viewModelScope.launch {
-        safeApiCallCategory(category, "single", per_page, fragmentName)
+    fun apiCall(category: String,type : String, perPage: Int, page: Int, fragmentName: String) = viewModelScope.launch {
+        safeApiCallCategory(category, type, perPage, page, fragmentName)
     }
 
-    fun apiCallCategory(category: String, type : String, per_page: Int) = viewModelScope.launch {
-        safeApiCallCategory(category, type, per_page)
-    }
-
-    private suspend fun safeApiCallCategory(category: String, type: String, per_page: Int, fragmentName: String = "default") {
-        val response = call.getPostCategory(category, per_page)
+    private suspend fun safeApiCallCategory(category: String, type: String, perPage: Int, page: Int, fragmentName: String = "default") {
+        val response = call.getPostCategory(perPage, page, category)
         when(type){
             TYPE_HORIZONTAL -> {
                 Log.d("CategoryHorizontal", "api called with pageno $category")
                 postResponseHorizontal.value = handleResponse(response, type)
             }
             TYPE_SINGLE -> {
-                val data = handleResponse(response, type)
-                Log.d("CategorySingle", "api called with pageno $category")
-                Log.d("CategorySingle", "api called with pageno ${data.data!!.size}")
-
+//                val data = handleResponse(response, type)
+//                Log.d("CategorySingle", "api called with pageno $category")
+//                Log.d("CategorySingle", "api called with pageno ${data.data!!.size}")
                 handleSingleData(fragmentName, response, type)
             }
             TYPE_VERTICAL -> {
@@ -121,7 +120,6 @@ class MainViewModel() : ViewModel(){
                 _postResponseH.value = handleResponse(response, type)
             }
         }
-
     }
 
     private fun handleResponse(response: Response<List<PostData>>, type : String): NetworkResults<List<PostData>> {
@@ -166,4 +164,5 @@ class MainViewModel() : ViewModel(){
             }
         }
     }
+
 }

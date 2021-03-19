@@ -10,58 +10,18 @@ import kotlinx.android.parcel.RawValue
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class PostData(
-        @SerializedName("author")
-    val author: Int?,
-        @SerializedName("categories")
-    val categories: List<Int?>?,
-        @SerializedName("comment_status")
-    val commentStatus: String?,
-        @SerializedName("content")
+    @SerializedName("content")
     val content: Content?,
-        @SerializedName("date")
+    @SerializedName("date")
     val date: String?,
-        @SerializedName("date_gmt")
-    val dateGmt: String?,
-        @SerializedName("_embedded")
+    @SerializedName("_embedded")
     val embedded: Embedded?,
-        @SerializedName("excerpt")
-    val excerpt: Excerpt?,
-        @SerializedName("featured_media")
-    val featuredMedia: Int?,
-        @SerializedName("format")
-    val format: String?,
-        @SerializedName("guid")
-    val guid: Guid?,
-        @SerializedName("id")
+    @SerializedName("id")
     val id: Int?,
-        @SerializedName("link")
-    val link: String?,
-        @SerializedName("_links")
+    @SerializedName("_links")
     val links: Links?,
-        @SerializedName("meta")
-    val meta: @RawValue List<Any?>?,
-        @SerializedName("modified")
-    val modified: String?,
-        @SerializedName("modified_gmt")
-    val modifiedGmt: String?,
-        @SerializedName("ping_status")
-    val pingStatus: String?,
-        @SerializedName("slug")
-    val slug: String?,
-        @SerializedName("status")
-    val status: String?,
-        @SerializedName("sticky")
-    val sticky: Boolean?,
-        @SerializedName("tags")
-    val tags: List<Int?>?,
-        @SerializedName("template")
-    val template: String?,
-        @SerializedName("title")
-    val title: Title?,
-        @SerializedName("type")
-    val type: String?,
-        @SerializedName("yoast_head")
-    val yoastHead: String?
+    @SerializedName("title")
+    val title: Title?
 ) : Parcelable {
     @SuppressLint("ParcelCreator")
     @Parcelize
@@ -251,29 +211,29 @@ data class PostData(
                 @SuppressLint("ParcelCreator")
                 @Parcelize
                 data class ImageMeta(
-                        @SerializedName("aperture")
+                    @SerializedName("aperture")
                     val aperture: String?,
-                        @SerializedName("camera")
+                    @SerializedName("camera")
                     val camera: String?,
-                        @SerializedName("caption")
+                    @SerializedName("caption")
                     val caption: String?,
-                        @SerializedName("copyright")
+                    @SerializedName("copyright")
                     val copyright: String?,
-                        @SerializedName("created_timestamp")
+                    @SerializedName("created_timestamp")
                     val createdTimestamp: String?,
-                        @SerializedName("credit")
+                    @SerializedName("credit")
                     val credit: String?,
-                        @SerializedName("focal_length")
+                    @SerializedName("focal_length")
                     val focalLength: String?,
-                        @SerializedName("iso")
+                    @SerializedName("iso")
                     val iso: String?,
-                        @SerializedName("keywords")
+                    @SerializedName("keywords")
                     val keywords: @RawValue List<Any?>?,
-                        @SerializedName("orientation")
+                    @SerializedName("orientation")
                     val orientation: String?,
-                        @SerializedName("shutter_speed")
+                    @SerializedName("shutter_speed")
                     val shutterSpeed: String?,
-                        @SerializedName("title")
+                    @SerializedName("title")
                     val title: String?
                 ) : Parcelable
 
@@ -486,22 +446,6 @@ data class PostData(
 
     @SuppressLint("ParcelCreator")
     @Parcelize
-    data class Excerpt(
-        @SerializedName("protected")
-        val `protected`: Boolean?,
-        @SerializedName("rendered")
-        val rendered: String?
-    ) : Parcelable
-
-    @SuppressLint("ParcelCreator")
-    @Parcelize
-    data class Guid(
-        @SerializedName("rendered")
-        val rendered: String?
-    ) : Parcelable
-
-    @SuppressLint("ParcelCreator")
-    @Parcelize
     data class Links(
         @SerializedName("about")
         val about: List<About?>?,
@@ -629,4 +573,3 @@ data class PostData(
         val rendered: String?
     ) : Parcelable
 }
-

@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:elevation="30dp"
+        android:elevation="0dp"
         app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,9 +27,9 @@
             <ImageView
                 android:id="@+id/imgPost"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="90dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="Post Image"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -44,8 +44,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/hind_semibold"
                 android:maxLines="3"
-                android:text="Nishant kmar , hello there my majdf;asfasfewreererere"
+                android:text="Nishant kmar , hdddddddddddddddddddddddddddddddddddello there my majdf;asfasfewreererere"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -57,13 +58,17 @@
                 android:id="@+id/txtUpldTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/hind_medium"
                 android:maxLines="1"
                 android:text="TextView"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imgPost"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/txtPostTitle"
-                app:layout_constraintStart_toStartOf="@+id/txtPostTitle" />
+                app:layout_constraintStart_toStartOf="@+id/txtPostTitle"
+                app:layout_constraintTop_toBottomOf="@+id/txtPostTitle" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

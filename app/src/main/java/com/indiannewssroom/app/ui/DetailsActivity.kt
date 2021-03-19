@@ -6,9 +6,11 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -21,6 +23,7 @@ import com.indiannewssroom.app.model.PostData
 import com.indiannewssroom.app.util.Constants.Companion.BUNDLE_DATA
 import com.indiannewssroom.app.util.Constants.Companion.INTENT_DATA
 import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter
+import org.sufficientlysecure.htmltextview.OnClickATagListener
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -58,7 +61,7 @@ private var _binding : ActivityDetailsBinding? = null
         binding.imgShare.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, myBundle!!.link)
+                putExtra(Intent.EXTRA_TEXT, myBundle!!.links?.self?.get(0)?.href)
                 type = "text/plain"
             }
 
@@ -91,6 +94,10 @@ private var _binding : ActivityDetailsBinding? = null
         if (myBundle != null) {
             binding.txtPostDesc.setHtml(myBundle.content?.rendered!!,
                 HtmlHttpImageGetter(binding.txtPostDesc, null, true ))
+        }
+        binding.txtPostDesc.setOnClickATagListener { widget, spannedText, href ->
+            Toast.makeText(this@DetailsActivity, postCategory, Toast.LENGTH_SHORT).show()
+            true
         }
     }
 

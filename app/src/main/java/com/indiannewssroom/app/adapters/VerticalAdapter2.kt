@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.*
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.indiannewssroom.app.databinding.BigArticleRowLayoutBinding
@@ -34,14 +35,15 @@ import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_G
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_H
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_HOME
 import com.indiannewssroom.app.util.Constants.Companion.INTENT_DATA
+import com.indiannewssroom.app.util.PostDiffUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import java.text.SimpleDateFormat
 import java.util.*
 
-class VerticalAdapter (val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class VerticalAdapter2 (val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-    var postdata = arrayListOf<PostData>()
+    var postdata = mutableListOf<PostData>()
     private val FIRST_VIEW_TYPE = 1
     private val OTHER_VIEW_TYPE = 2
 
@@ -134,6 +136,7 @@ class VerticalAdapter (val context: Context): RecyclerView.Adapter<RecyclerView.
                             crossfade(600)
                         }
                     }
+
                 }
             }
             binding.bigRowLayout.setOnClickListener {
@@ -213,6 +216,10 @@ class VerticalAdapter (val context: Context): RecyclerView.Adapter<RecyclerView.
         return postdata.size
     }
 
+    fun clearList(){
+        postdata.clear()
+    }
+
     fun setData(data: List<PostData>) {
 //        val myDiffUtil = PostDiffUtils(postdata, data)
 //        val diffUtilResult = DiffUtil.calculateDiff(myDiffUtil)
@@ -222,13 +229,12 @@ class VerticalAdapter (val context: Context): RecyclerView.Adapter<RecyclerView.
     }
 
     fun setDataOther(data: List<PostData>) {
-//        val myDiffUtil = PostDiffUtils(postdata, data)
-//        val diffUtilResult = DiffUtil.calculateDiff(myDiffUtil)
-        postdata.clear()
+        val myDiffUtil = PostDiffUtils(postdata, data)
+        val diffUtilResult = DiffUtil.calculateDiff(myDiffUtil)
+//        postdata.clear()
         postdata.addAll(data)
-//        diffUtilResult.dispatchUpdatesTo(this)
+        diffUtilResult.dispatchUpdatesTo(this)
     }
-
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
@@ -241,7 +247,6 @@ class VerticalAdapter (val context: Context): RecyclerView.Adapter<RecyclerView.
             OTHER_VIEW_TYPE
         }
     }
-
 }
 
 private fun String.toDate(dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss", timeZone: TimeZone = TimeZone.getTimeZone("UTC")): Date {

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
@@ -24,6 +25,8 @@ import com.indiannewssroom.app.util.Constants.Companion.breaking_news
 import com.indiannewssroom.app.util.Constants.Companion.game_and_player
 import com.indiannewssroom.app.util.Constants.Companion.general_knowledge
 import com.indiannewssroom.app.util.Constants.Companion.viral_news
+import com.indiannewssroom.app.util.NetworkListener
+import com.indiannewssroom.app.util.observeOnce
 import com.indiannewssroom.app.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
@@ -36,8 +39,8 @@ class HomeFragment : Fragment() {
     private var isLoading = true
     private var userScroll = true
     private var pageNo = 1
-    private val postOnHome = 5
     private var myTurn = true
+    private var perPage = 5
 
 
     override fun onCreateView(
@@ -58,25 +61,31 @@ class HomeFragment : Fragment() {
         list.add("Vertical")
         homeAdapter.groupData(list)
 
-        firstCall()
+//        mainViewModel.networkText.observeOnce(viewLifecycleOwner, { isConnected ->
+//            if (isConnected){
+                firstApiCall()
+//            }
+//            else {
+//                Toast.makeText(requireContext(), "No Internet Connection", Toast.LENGTH_LONG).show()
+//            }
+//        })
         setupHorizontalObserver()
         setupVerticalObserver()
 
         return mView
     }
 
-    private fun firstCall() {
+    private fun firstApiCall() {
 
         if (myTurn){
-            mainViewModel.apiCallCategory(breaking_news.second, TYPE_HORIZONTAL,postOnHome)
-            mainViewModel.apiCallCategory(bollywood_cinema.second, TYPE_VERTICAL,postOnHome)
-            mainViewModel.apiCallCategory(game_and_player.second, TYPE_VERTICAL,postOnHome)
-            mainViewModel.apiCallCategory(viral_news.second, TYPE_VERTICAL,postOnHome)
-            mainViewModel.apiCallCategory(general_knowledge.second, TYPE_VERTICAL,postOnHome)
+            mainViewModel.apiCall(breaking_news.second, TYPE_HORIZONTAL,perPage, pageNo, FRAGMENT_NAME_HOME)
+            mainViewModel.apiCall(bollywood_cinema.second, TYPE_VERTICAL,perPage, pageNo, FRAGMENT_NAME_HOME)
+            mainViewModel.apiCall(game_and_player.second, TYPE_VERTICAL, perPage, pageNo, FRAGMENT_NAME_HOME)
+            mainViewModel.apiCall(viral_news.second, TYPE_VERTICAL, perPage, pageNo, FRAGMENT_NAME_HOME)
+            mainViewModel.apiCall(general_knowledge.second, TYPE_VERTICAL, perPage, pageNo, FRAGMENT_NAME_HOME)
             Log.d("Cut12", "called")
             myTurn = mainViewModel.isFirst
         }
-
     }
 
     private fun setupVerticalObserver() {
@@ -104,13 +113,5 @@ class HomeFragment : Fragment() {
         })
     }
 
-    fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
-        observe(lifecycleOwner, object : Observer<T> {
-            override fun onChanged(t: T?) {
-                removeObserver(this)
-                observer.onChanged(t)
-            }
-        })
-    }
 
 }

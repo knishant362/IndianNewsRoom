@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.d.FragmentD">
 
     <HorizontalScrollView
-        android:id="@+id/sv_meal_type"
+        android:id="@+id/sv_d_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,25 +38,25 @@
                     android:text="All" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_spiritual"
+                    android:id="@+id/chip_health"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="अध्यात्म" />
+                    android:text="स्वास्थ्य" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_astrology"
+                    android:id="@+id/chip_relationship"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="राशिफल" />
+                    android:text="रिलेशनशिप" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_vastu_shastra"
+                    android:id="@+id/chip_fashion_and_style"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="वास्तु" />
+                    android:text="फैशन" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_lent_and_festivals"
@@ -66,27 +66,49 @@
                     android:text="व्रत और त्यौहार" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_chanakya_niti"
+                    android:id="@+id/chip_tour_and_travel"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="वचाणक्य नीति" />
+                    android:text="यात्रा" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_food_and_recipes"
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="खाना-खजाना" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_ghrelu_nuskhe"
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="घरेलू-नुस्खे" />
 
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
     </HorizontalScrollView>
 
-    <com.todkars.shimmer.ShimmerRecyclerView
-        android:id="@+id/fragmentRecyclerD"
-        android:layout_width="0dp"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshDataD"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:shimmer_recycler_item_count="3"
-        app:shimmer_recycler_layout="@layout/placeholder_row_layout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sv_meal_type" />
+        app:layout_constraintTop_toBottomOf="@+id/sv_d_category">
 
+        <com.todkars.shimmer.ShimmerRecyclerView
+            android:id="@+id/fragmentRecyclerD"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:shimmer_recycler_item_count="3"
+            app:shimmer_recycler_layout="@layout/placeholder_row_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_d_category" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

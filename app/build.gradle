@@ -85,8 +85,6 @@ dependencies {
     //Html text view
     implementation 'org.sufficientlysecure:html-textview:4.0'
 
-    implementation "com.squareup.picasso:picasso:2.71828"
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
 
 
 }

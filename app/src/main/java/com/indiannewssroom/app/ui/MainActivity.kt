@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.indiannewssroom.app.R
 import com.indiannewssroom.app.adapters.ViewPagerAdapter
+import com.indiannewssroom.app.util.NetworkListener
 import com.indiannewssroom.app.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +35,16 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+//        val networkListener = NetworkListener(this)
+//        networkListener.observe(this, { isConnected ->
+//            if (isConnected){
+//                mainViewModel._networkText.value = true
+//            }
+//            else {
+//                mainViewModel._networkText.value = true
+//            }
+//        })
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->

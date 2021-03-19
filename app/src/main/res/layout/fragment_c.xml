@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.c.FragmentC">
 
     <HorizontalScrollView
-        android:id="@+id/sv_meal_type"
+        android:id="@+id/sv_c_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -77,16 +77,25 @@
 
     </HorizontalScrollView>
 
-    <com.todkars.shimmer.ShimmerRecyclerView
-        android:id="@+id/fragmentRecyclerC"
-        android:layout_width="0dp"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshDataC"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:shimmer_recycler_item_count="3"
-        app:shimmer_recycler_layout="@layout/placeholder_row_layout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sv_meal_type" />
+        app:layout_constraintTop_toBottomOf="@+id/sv_c_category">
+
+        <com.todkars.shimmer.ShimmerRecyclerView
+            android:id="@+id/fragmentRecyclerC"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_c_category"
+            app:shimmer_recycler_item_count="3"
+            app:shimmer_recycler_layout="@layout/placeholder_row_layout" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
