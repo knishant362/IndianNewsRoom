@@ -13,6 +13,7 @@ import com.indiannewssroom.app.ui.fragments.f.FragmentF
 import com.indiannewssroom.app.ui.fragments.g.FragmentG
 import com.indiannewssroom.app.ui.fragments.h.FragmentH
 import com.indiannewssroom.app.ui.fragments.home.HomeFragment
+import com.indiannewssroom.app.ui.fragments.i.FragmentI
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle)
     : FragmentStateAdapter(fragmentManager, lifecycle) {
@@ -26,14 +27,15 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle)
     }
 
     val fragments:ArrayList<Fragment> = arrayListOf(
-            HomeFragment(),
-            FragmentA(),
-            FragmentB(),
-            FragmentC(),
-            FragmentD(),
-            FragmentE(),
-            FragmentF(),
-            FragmentG(),
-            FragmentH()
+        HomeFragment(),
+        FragmentA(),
+        FragmentB(),
+        FragmentC(),
+        FragmentD(),
+        FragmentE(),
+        FragmentF(),
+        FragmentG(),
+        FragmentH(),
+        FragmentI()
     )
 }

@@ -81,10 +81,13 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.todkars:shimmer-recyclerview:0.4.0'
 
-
     //Html text view
     implementation 'org.sufficientlysecure:html-textview:4.0'
 
+    //Internet check
+    implementation 'com.github.jumadeveloper:networkmanager:0.0.2'
 
+    //Lotte animations
+    implementation "com.airbnb.android:lottie:3.5.0"
 
 }

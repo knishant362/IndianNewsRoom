@@ -11,6 +11,7 @@ import androidx.navigation.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.indiannewssroom.app.R
 import com.indiannewssroom.app.databinding.BigArticleRowLayoutBinding
 import com.indiannewssroom.app.databinding.PostRowLayoutBinding
 import com.indiannewssroom.app.model.PostData
@@ -52,9 +53,6 @@ class VerticalAdapter2 (val context: Context): RecyclerView.Adapter<RecyclerView
 
         fun bind(postData: PostData, context: Context) {
             binding.txtPostTitle.text = postData.title!!.rendered
-            binding.txtPostTitle.setOnClickListener {
-                Toast.makeText(binding.root.context, adapterPosition.toString(), Toast.LENGTH_SHORT).show()
-            }
 
             binding.clPostRow.setOnClickListener {
 
@@ -74,50 +72,14 @@ class VerticalAdapter2 (val context: Context): RecyclerView.Adapter<RecyclerView
                 if (postData?.embedded?.wpFeaturedmedia != null){
                         load(postData.embedded.wpFeaturedmedia[0]?.sourceUrl){
                             crossfade(600)
-//                            error(R.drawable.error_placeholder)
+                            error(R.drawable.error_placeholder)
                         }
 
                 }
             }
         }
-        /**this returns the respective Directions class using fragmentName to compare */
-        private fun returnAction (fragmentName: String, postData: PostData) : NavDirections {
 
-            var action : NavDirections = HomeFragmentDirections.actionNavHomeToDetailFragment(postData)
-            when(fragmentName){
-                FRAGMENT_NAME_HOME ->{
-                    action = HomeFragmentDirections.actionNavHomeToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_A ->{
-                    action = FragmentADirections.actionNavFragmentAToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_B ->{
-                    action = FragmentBDirections.actionNavFragmentBToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_C ->{
-                    action = FragmentCDirections.actionNavFragmentCToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_D ->{
-                    action = FragmentDDirections.actionNavFragmentDToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_E ->{
-                    action = FragmentEDirections.actionNavFragmentEToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_F ->{
-                    action = FragmentFDirections.actionNavFragmentFToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_G ->{
-                    action = FragmentGDirections.actionNavFragmentGToDetailFragment(postData)
-                }
-                FRAGMENT_NAME_H ->{
-                    action = FragmentHDirections.actionNavFragmentHToDetailFragment(postData)
-                }
-
-            }
-            return action
-        }
     }
-
 
     class BigViewHolder(private val binding: BigArticleRowLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -134,6 +96,7 @@ class VerticalAdapter2 (val context: Context): RecyclerView.Adapter<RecyclerView
                     c.run {
                         load(postData.embedded.wpFeaturedmedia[0]?.sourceUrl){
                             crossfade(600)
+                            error(R.drawable.error_placeholder)
                         }
                     }
 
@@ -150,42 +113,6 @@ class VerticalAdapter2 (val context: Context): RecyclerView.Adapter<RecyclerView
             }
         }
 
-        /**this returns the respective Directions class using fragmentName to compare */
-        private fun returnAction (fragmentName: String, postData: PostData) : NavDirections {
-
-            var action : NavDirections = HomeFragmentDirections.actionNavHomeToDetailFragment(postData)
-                when(fragmentName){
-                    FRAGMENT_NAME_HOME ->{
-                        action = HomeFragmentDirections.actionNavHomeToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_A ->{
-                        action = FragmentADirections.actionNavFragmentAToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_B ->{
-                        action = FragmentBDirections.actionNavFragmentBToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_C ->{
-                        action = FragmentCDirections.actionNavFragmentCToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_D ->{
-                        action = FragmentDDirections.actionNavFragmentDToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_E ->{
-                        action = FragmentEDirections.actionNavFragmentEToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_F ->{
-                        action = FragmentFDirections.actionNavFragmentFToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_G ->{
-                        action = FragmentGDirections.actionNavFragmentGToDetailFragment(postData)
-                    }
-                    FRAGMENT_NAME_H ->{
-                        action = FragmentHDirections.actionNavFragmentHToDetailFragment(postData)
-                    }
-
-            }
-            return action
-        }
     }
 
 
@@ -218,14 +145,6 @@ class VerticalAdapter2 (val context: Context): RecyclerView.Adapter<RecyclerView
 
     fun clearList(){
         postdata.clear()
-    }
-
-    fun setData(data: List<PostData>) {
-//        val myDiffUtil = PostDiffUtils(postdata, data)
-//        val diffUtilResult = DiffUtil.calculateDiff(myDiffUtil)
-//        postdata.clear()
-        postdata.addAll(data)
-//        diffUtilResult.dispatchUpdatesTo(this)
     }
 
     fun setDataOther(data: List<PostData>) {

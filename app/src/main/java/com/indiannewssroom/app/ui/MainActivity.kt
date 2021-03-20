@@ -1,90 +1,153 @@
 package com.indiannewssroom.app.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import android.widget.ImageView
 import com.google.android.material.navigation.NavigationView
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.indiannewssroom.app.R
 import com.indiannewssroom.app.adapters.ViewPagerAdapter
-import com.indiannewssroom.app.util.NetworkListener
+import com.indiannewssroom.app.ui.about.AboutActivity
+import com.indiannewssroom.app.util.Constants.Companion.breaking_news
+import com.indiannewssroom.app.util.Constants.Companion.dilchasp
+import com.indiannewssroom.app.util.Constants.Companion.entertainment
+import com.indiannewssroom.app.util.Constants.Companion.game_and_player
+import com.indiannewssroom.app.util.Constants.Companion.general_knowledge
+import com.indiannewssroom.app.util.Constants.Companion.homeTabName
+import com.indiannewssroom.app.util.Constants.Companion.latest_news
+import com.indiannewssroom.app.util.Constants.Companion.lifestyle
+import com.indiannewssroom.app.util.Constants.Companion.religion
+import com.indiannewssroom.app.util.Constants.Companion.science_and_technology
 import com.indiannewssroom.app.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
+    private lateinit var toolbar: ImageView
+    private lateinit var viewPager2:ViewPager2
+    private lateinit var tablayout:TabLayout
+    private lateinit var adapter : ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-//        val networkListener = NetworkListener(this)
-//        networkListener.observe(this, { isConnected ->
-//            if (isConnected){
-//                mainViewModel._networkText.value = true
-//            }
-//            else {
-//                mainViewModel._networkText.value = true
-//            }
-//        })
-
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-//        navView.setupWithNavController(navController,)
-//
-//        appBarConfiguration = AppBarConfiguration(setOf(
-//                R.id.nav_home, R.id.nav_home,
-//                R.id.nav_fragment_a,R.id.nav_fragment_b,
-//                R.id.nav_fragment_c,R.id.nav_fragment_d,
-//                R.id.nav_fragment_e,R.id.nav_fragment_f,
-//                R.id.nav_fragment_g,R.id.nav_fragment_h,
-//        ), drawerLayout)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
+        toolbar = findViewById(R.id.drawerMenu)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        viewPager2 = findViewById(R.id.viewPagerHome)
+        tablayout = findViewById(R.id.mainTabGroup)
+        adapter = ViewPagerAdapter(supportFragmentManager,lifecycle)
+        viewPager2.adapter = adapter
 
         initViewPager2WithFragments()
 
+        toolbar.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+
+        navView.setNavigationItemSelectedListener { myItem ->
+            when(myItem.itemId){
+                R.id.nav_youtube -> {
+                    openApp("https://www.youtube.com/c/IndianNewsRoom","com.google.android.youtube" )
+                    drawerState()
+                    true
+                }
+                R.id.nav_instagram -> {
+                    openApp("https://www.instagram.com/indian_news_room/","com.instagram.android" )
+                    drawerState()
+                    true
+                }
+                R.id.nav_facebook -> {
+                    openApp("https://www.facebook.com/INRMedia/","com.facebook.katana" )
+                    drawerState()
+                    true
+                }
+                R.id.nav_twitter -> {
+                    openApp("https://twitter.com/inrmedia","com.twitter.android" )
+                    drawerState()
+                    true
+                }
+                R.id.nav_visit_us -> {
+                    startActivity(Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.indiannewsroom.com/")
+                    ))
+                    drawerState()
+                    true
+                }
+                R.id.nav_share -> {
+                    shareApp("https://play.google.com/store/apps/details?id=com.indiannewssroom.app")
+                    drawerState()
+                    true
+                }
+                R.id.nav_rate -> {
+                    startActivity(Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=com.indiannewssroom.app")
+                    ))
+                    drawerState()
+                    true
+                }
+                R.id.nav_about_app -> {
+                    startActivity(Intent(this, AboutActivity::class.java))
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+    }
+
+    private fun shareApp(link : String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT,link)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
+    private fun openApp(url: String, app: String) {
+        val sendIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(url)
+        )
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.setPackage(app)
+        startActivity(sendIntent)
+    }
+
+    private fun drawerState() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
     }
 
     private fun initViewPager2WithFragments() {
-        val viewPager2:ViewPager2 = findViewById(R.id.viewPagerHome)
-        val adapter = ViewPagerAdapter(supportFragmentManager,lifecycle)
-        viewPager2.adapter = adapter
-
-        val tablayout:TabLayout = findViewById(R.id.mainTabGroup)
-        val names:Array<String> = arrayOf("होम","ब्रेकिंग न्यूज","खबरें","धर्म-कर्म","लाइफस्टाइल","मनोरंजन","दिलचस्प","खेल जगत","विज्ञान और तकनीक")
+        val names:Array<String> = arrayOf(homeTabName,
+            breaking_news.first,latest_news.first,
+            religion.first,lifestyle.first,
+            entertainment.first,dilchasp.first,
+            game_and_player.first,science_and_technology.first,
+            general_knowledge.first
+        )
         TabLayoutMediator(tablayout,viewPager2){tab, position ->
             tab.text = names[position]
         }.attach()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
 
 }

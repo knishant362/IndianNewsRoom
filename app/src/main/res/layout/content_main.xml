@@ -20,55 +20,44 @@
             android:id="@+id/tab_home111"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="होम" />
+            android:text="@string/HomeCategory" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="धर्म-कर्म" />
+            android:text="@string/ReligionCategory" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="लाइफस्टाइल" />
+            android:text="@string/LifeStyleCategory" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab41"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="मनोरंजन" />
+            android:text="@string/Entertainment" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab51"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="दिलचस्प" />
+            android:text="@string/dilchasp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab61"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="खेल जगत" />
+            android:text="@string/gameAndPlayer" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab71"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="विज्ञान और तकनीक" />
+            android:text="@string/sciTech" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab81"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="सामान्य ज्ञान" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab91"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ववीडियो" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2

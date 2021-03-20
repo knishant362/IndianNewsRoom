@@ -1,7 +1,6 @@
 
 package com.indiannewssroom.app.ui.fragments.b
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,24 +8,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.indiannewssroom.app.adapters.VerticalAdapter2
 import com.indiannewssroom.app.databinding.FragmentBBinding
+import com.indiannewssroom.app.util.Constants.Companion.CG_INVISIBLE
+import com.indiannewssroom.app.util.Constants.Companion.CG_VISIBLE
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_B
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
+import com.indiannewssroom.app.util.Constants.Companion.international_news
 import com.indiannewssroom.app.util.Constants.Companion.latest_news
-import com.indiannewssroom.app.util.NetworkListener
-import com.indiannewssroom.app.util.observeOnce
+import com.indiannewssroom.app.util.Constants.Companion.national_news
+import com.indiannewssroom.app.util.Constants.Companion.social_media
+import com.indiannewssroom.app.util.Constants.Companion.viral_news
 import com.indiannewssroom.app.viewmodel.MainViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 
 class FragmentB : Fragment() {
 
@@ -35,36 +34,29 @@ class FragmentB : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mAdapter: VerticalAdapter2
     private lateinit var mRecyclerView: ShimmerRecyclerView
-    private var perPage = 20
-    private var myTurn = true
-    private val this_category = latest_news.second
-    private var isLoading = true
-    private var userScroll = true
-    private var pageNo = 1
     private lateinit var mLinearLayoutManager : LinearLayoutManager
-    private var postFinish = 1
+    private var this_category = latest_news.second
 
-    @ExperimentalCoroutinesApi
-    @RequiresApi(Build.VERSION_CODES.N)
+    private var myTurn = true
+    private var isLoading = false
+    private var userScroll = true
+    private var postFinish = 1
+    private var pageNo = 1
+    private var perPage = 20
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?)
+    : View? {
+
         _binding = FragmentBBinding.inflate(inflater, container, false)
         mAdapter = VerticalAdapter2(requireContext())
         mRecyclerView = binding.fragmentRecyclerB
         mLinearLayoutManager = LinearLayoutManager(requireContext())
 
-
-//        mainViewModel.networkText.observeOnce(viewLifecycleOwner, { isConnected ->
-//            if (isConnected){
-                firstApiCall()
-//            }
-//        })
-
         setupRecyclerView()
+        firstApiCall()
 
         mRecyclerView.apply {
-//            linearLayoutManager.isSmoothScrollbarEnabled = true
-//            adapter = mAdapter
             setHasFixedSize(true)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
@@ -84,30 +76,46 @@ class FragmentB : Fragment() {
                     val pastVisibleItems = mLinearLayoutManager.findFirstVisibleItemPosition()
                     val lastItem = mLinearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    Log.d("testRecyc", "Loding: $isLoading")
                     if (userScroll && (visibleItemCount + pastVisibleItems) == totalItem && dy > 0) {
                         userScroll = false
-
-                        Log.d("postFinish", "$postFinish")
                         if (postFinish>=0){
                             showSnackBar("Loading")
                             updateRecyclerView()
                         }else{
                             showSnackBar("That's all for Now!")
                         }
-
                     }
                 }
             })
+        }
+
+
+        binding.cgFragmentB.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            val selectedCategory = chip.text.toString()
+            val chipCat = myTranslator(selectedCategory)
+            Log.d("Cut3", chipCat)
+            showShimmerEffect()
+            chipGroupVisibility(CG_INVISIBLE)
+            mAdapter.clearList()
+            this_category = chipCat
+            pageNo = 1
+            postFinish = 1
+            mainViewModel.apiCall( this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_B )
         }
 
         mainViewModel.postResponseB.observe(viewLifecycleOwner, {
             val postdata = it.data
             if (postdata!=null)
                 mAdapter.setDataOther(postdata)
+            chipGroupVisibility(CG_VISIBLE)
             if (pageNo==1){
                 Log.d("Thiss","htiss")
             }else{
+
+                /** this is just to calculate the last ending position of item in RV ,
+                 *  to make it shift to this position again after new data is added*/
+
                 val pos = (mAdapter.itemCount)
                 val myff = 9+(((pageNo-1)*20)-12)
                 val mf = pos-23
@@ -118,6 +126,7 @@ class FragmentB : Fragment() {
                 }
                 Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
                 mRecyclerView.scrollToPosition(myff);
+                isLoading = true
             }
             binding.refreshDataB.isRefreshing = false
             hideShimmerEffect()
@@ -125,19 +134,70 @@ class FragmentB : Fragment() {
 
         binding.refreshDataB.setOnRefreshListener {
             showShimmerEffect()
-            pageNo=1
+            chipGroupVisibility(CG_INVISIBLE)
+            pageNo = 1
+            postFinish = 1
             mAdapter.clearList()
             mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_B)
         }
         return binding.root
     }
 
-    private fun updateRecyclerView() {
-//        showShimmerEffect()
 
-        pageNo++
-        mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_B)
+    private fun firstApiCall() {
+        /**this apiCall will only launch once(at startup)*/
+        if (myTurn){
+            isLoading = true
+            mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_B)
+            myTurn = mainViewModel.isFirst
+        }
     }
+
+
+    /**Here isLoading checks that new call is made only after the previous data is loaded from observer*/
+    private fun updateRecyclerView() {
+        Log.d("MyCalll", isLoading.toString())
+        if (isLoading){
+            pageNo++
+            Log.d("MyCalll", this_category)
+            mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_B)
+            isLoading = false
+        }
+    }
+
+
+    /**It compares the input category from chip and compares and give its category from its Pair*/
+    private fun myTranslator(selectedCategory: String): String {
+        var trans = latest_news.second
+
+        when(selectedCategory){
+            "All" -> {
+                trans =  latest_news.second
+            }
+            national_news.first -> {
+                trans = national_news.second
+            }
+            international_news.first -> {
+                trans = international_news.second
+            }
+            viral_news.first -> {
+                trans = viral_news.second
+            }
+            social_media.first -> {
+                trans = social_media.second
+            }
+        }
+        return trans
+    }
+
+
+    private fun setupRecyclerView() {
+        mRecyclerView.adapter = mAdapter
+        mRecyclerView.layoutManager = mLinearLayoutManager
+        chipGroupVisibility(CG_INVISIBLE)
+        showShimmerEffect()
+    }
+
 
     private fun showSnackBar(message: String) {
         view?.let {
@@ -146,25 +206,22 @@ class FragmentB : Fragment() {
         }
     }
 
-    private fun firstApiCall() {
-        /**this apiCall will only launch once(at startup)*/
-        if (myTurn){
-            mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_B)
-            myTurn = mainViewModel.isFirst
-        }
-    }
-
-    private fun setupRecyclerView() {
-        mRecyclerView.adapter = mAdapter
-        mRecyclerView.layoutManager = mLinearLayoutManager
-    }
 
     private fun showShimmerEffect() {
         mRecyclerView.showShimmer()
     }
 
+
     private fun hideShimmerEffect() {
         mRecyclerView.hideShimmer()
+    }
+
+
+    private fun chipGroupVisibility(s: String) {
+        when(s){
+            CG_INVISIBLE -> binding.cgFragmentB.visibility = View.INVISIBLE
+            CG_VISIBLE -> binding.cgFragmentB.visibility = View.VISIBLE
+        }
     }
 
 

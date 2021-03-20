@@ -15,4 +15,39 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="navigation_icon">Navigation Icon</string>
+    <string name="app_logo">App logo</string>
+    <string name="noInternet">No Internet Connections\nCheck your Internet Connection and restart your App</string>
+    <string name="no_internet_image">No Internet Image</string>
+    <string name="big_post_image">Big Post Image</string>
+
+
+    <string name="HomeCategory">होम</string>
+    <string name="ReligionCategory">धर्म-कर्म</string>
+    <string name="LifeStyleCategory">लाइफस्टाइल</string>
+    <string name="Entertainment">मनोरंजन</string>
+    <string name="dilchasp">दिलचस्प</string>
+    <string name="gameAndPlayer">खेल जगत</string>
+    <string name="sciTech">विज्ञान और तकनीक</string>
+    <string name="spiritual">अध्यात्म</string>
+    <string name="astrology">राशिफल</string>
+    <string name="lent_and_festival">व्रत और त्यौहार</string>
+    <string name="vastu_ahastra">वास्तु</string>
+    <string name="chanakya_niti">चाणक्य नीति</string>
+    <string name="all">All</string>
+    <string name="health">स्वास्थ्य</string>
+    <string name="relationship">रिलेशनशिप</string>
+    <string name="fashion_and_styles">फैशन</string>
+    <string name="tour_and_travel">यात्रा</string>
+    <string name="ghrelu_nuskhe">खाना-खजाना</string>
+    <string name="food_and_recipes">खाना-खजाना</string>
+    <string name="tv_and_serial">टेलीविजन</string>
+    <string name="bollywood_cinema">बॉलीवुड</string>
+    <string name="humour">हंसी-ठट्ठा</string>
+    <string name="national_news">देश</string>
+    <string name="internation_news">विदेश</string>
+    <string name="viral_news">वायरल</string>
+    <string name="social_media">सोशल मीडिया</string>
+
+
 </resources>

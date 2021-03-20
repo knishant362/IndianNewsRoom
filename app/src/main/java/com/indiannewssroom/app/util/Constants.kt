@@ -7,11 +7,13 @@ class Constants {
         const val INTENT_DATA = "MyIntent"
         const val BUNDLE_DATA = "MyBundle"
 
+        val homeTabName = "होम"
+
         val breaking_news : Pair<String, String> = Pair("ब्रेकिंग न्यूज","2656")
 
         val latest_news : Pair<String, String> = Pair("खबरें","2687")
         val national_news : Pair<String, String> = Pair("देश","2688")
-        val international_news : Pair<String, String> = Pair("विदेश","2688")
+        val international_news : Pair<String, String> = Pair("विदेश","2689")
         val viral_news : Pair<String, String> = Pair("वायरल","28")
         val social_media : Pair<String, String> = Pair("सोशल मीडिया","2690")
 
@@ -27,7 +29,7 @@ class Constants {
         val relationship : Pair<String, String> = Pair("रिलेशनशिप","33")
         val fashion_and_style : Pair<String, String> = Pair("फैशन","2696")
         val tour_and_travel : Pair<String, String> = Pair("यात्रा","2695")
-        val food_and_recipes : Pair<String, String> = Pair("खाना-खजाना","2697")
+        val food_and_recipes : Pair<String, String> = Pair("","2697")
         val ghrelu_nuskhe : Pair<String, String> = Pair("घरेलू-नुस्खे","2698")
 
         val entertainment : Pair<String, String> = Pair("मनोरंजन","1")
@@ -53,11 +55,14 @@ class Constants {
         const val FRAGMENT_NAME_F = "F"
         const val FRAGMENT_NAME_G = "G"
         const val FRAGMENT_NAME_H = "H"
+        const val FRAGMENT_NAME_I = "I"
 
         const val TYPE_SINGLE = "single"
         const val TYPE_HORIZONTAL = "horizontal"
         const val TYPE_VERTICAL = "vertical"
 
+        const val CG_VISIBLE = "Visible"
+        const val CG_INVISIBLE = "Invisible"
 
     }
 

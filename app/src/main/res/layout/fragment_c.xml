@@ -35,42 +35,42 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All" />
+                    android:text="@string/all" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_spiritual"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="अध्यात्म" />
+                    android:text="@string/spiritual" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_astrology"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="राशिफल" />
+                    android:text="@string/astrology" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_vastu_shastra"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="वास्तु" />
+                    android:text="@string/vastu_ahastra" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_lent_and_festivals"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="व्रत और त्यौहार" />
+                    android:text="@string/lent_and_festival" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_chanakya_niti"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="चाणक्य नीति" />
+                    android:text="@string/chanakya_niti" />
 
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
@@ -93,7 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sv_c_category"
-            app:shimmer_recycler_item_count="3"
+            app:shimmer_recycler_item_count="2"
             app:shimmer_recycler_layout="@layout/placeholder_row_layout" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

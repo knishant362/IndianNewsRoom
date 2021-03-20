@@ -13,13 +13,6 @@ interface ApiService {
             @Query("_embed") embed: String = "true",
     ): Response<List<PostData>>
 
-//    @GET("/wp-json/wp/v2/posts")
-//    suspend fun getPostCategory(
-//            @Query("per_page") postPer : Int = 5,
-//            @Query("_embed") embed : String = "true",
-//            @Query("categories") categories: String = "29"
-//    ): Response<List<PostData>>
-
     @GET("/wp-json/wp/v2/posts")
     suspend fun getPostCategoryPage(
             @Query("per_page") postPer : Int = 10,

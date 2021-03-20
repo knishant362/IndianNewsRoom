@@ -13,6 +13,8 @@ import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_E
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_F
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_G
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_H
+import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_HOME
+import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_I
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_HORIZONTAL
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_VERTICAL
@@ -48,24 +50,18 @@ class MainViewModel : ViewModel(){
     private val _postResponseH = MutableLiveData<NetworkResults<List<PostData>>>()
     val postResponseH : LiveData<NetworkResults<List<PostData>>> get() = _postResponseH
 
+    private val _postResponseI = MutableLiveData<NetworkResults<List<PostData>>>()
+    val postResponseI : LiveData<NetworkResults<List<PostData>>> get() = _postResponseI
+
     var postResponseHorizontal: MutableLiveData<NetworkResults<List<PostData>>> = MutableLiveData()
     var postResponseVertical: MutableLiveData<NetworkResults<List<PostData>>> = MutableLiveData()
 
     private val call = RemoteDataSource()
-    private var horizontalList = arrayListOf<PostData>()
+    var horizontalList = mutableListOf<PostData>()
     private var verticalList = arrayListOf<PostData>()
     val isFirst = false
-    var networkStatus = false
-    var backOnline = false
 
-//    init{
-//        apiCallCategory("29", TYPE_HORIZONTAL,postOnHome)
-//        apiCallCategory("2697", TYPE_VERTICAL,postOnHome)
-//        apiCallCategory("2701", TYPE_VERTICAL,postOnHome)
-//        apiCallCategory("30", TYPE_VERTICAL,postOnHome)
-//        apiCallCategory("2698", TYPE_VERTICAL,postOnHome)
-//    }
-
+    /** Upper most function call in Fragments*/
     fun apiCall(category: String,type : String, perPage: Int, page: Int, fragmentName: String) = viewModelScope.launch {
         safeApiCallCategory(category, type, perPage, page, fragmentName)
     }
@@ -81,6 +77,7 @@ class MainViewModel : ViewModel(){
 //                val data = handleResponse(response, type)
 //                Log.d("CategorySingle", "api called with pageno $category")
 //                Log.d("CategorySingle", "api called with pageno ${data.data!!.size}")
+                Log.d("CategoryHorizontal", "api called with pageno $category")
                 handleSingleData(fragmentName, response, type)
             }
             TYPE_VERTICAL -> {
@@ -118,6 +115,9 @@ class MainViewModel : ViewModel(){
             }
             FRAGMENT_NAME_H-> {
                 _postResponseH.value = handleResponse(response, type)
+            }
+            FRAGMENT_NAME_I-> {
+                _postResponseI.value = handleResponse(response, type)
             }
         }
     }

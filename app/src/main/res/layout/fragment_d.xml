@@ -35,56 +35,49 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All" />
+                    android:text="@string/all" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_health"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="स्वास्थ्य" />
+                    android:text="@string/health" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_relationship"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="रिलेशनशिप" />
+                    android:text="@string/relationship" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_fashion_and_style"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="फैशन" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_lent_and_festivals"
-                    style="@style/CustomChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="व्रत और त्यौहार" />
+                    android:text="@string/fashion_and_styles" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_tour_and_travel"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="यात्रा" />
+                    android:text="@string/tour_and_travel" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_food_and_recipes"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="खाना-खजाना" />
+                    android:text="@string/food_and_recipes"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_ghrelu_nuskhe"
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="घरेलू-नुस्खे" />
+                    android:text="@string/ghrelu_nuskhe" />
 
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
@@ -102,7 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:shimmer_recycler_item_count="3"
+            app:shimmer_recycler_item_count="2"
             app:shimmer_recycler_layout="@layout/placeholder_row_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

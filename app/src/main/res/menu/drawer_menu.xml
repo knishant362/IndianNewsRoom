@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!--    "होम","धर्म-कर्म","लाइफस्टाइल","मनोरंजन", "दिलचस्प", "खेल जगत", "विज्ञान और तकनीक", "सामान्य ज्ञान", "ववीडियो"-->
+
+    <group
+        android:checkableBehavior="single">
+        <item android:title="User">
+            <menu>
+                <item
+                    android:id="@+id/nav_home_categories"
+                    android:icon="@drawable/ic_pin"
+                    android:title="Home Category" />
+                <item
+                    android:id="@+id/nav_bookmark"
+                    android:icon="@drawable/ic_bookmark"
+                    android:title="Bookmark" />
+
+            </menu>
+        </item>
+    </group>
+
+    <group
+        android:checkableBehavior="single">
+        <item android:title="Social">
+            <menu>
+                <item
+                    android:id="@+id/nav_youtube"
+                    android:icon="@drawable/ic_youtube"
+                    android:title="YouTube" />
+                <item
+                    android:id="@+id/nav_instagram"
+                    android:icon="@drawable/ic_insta"
+                    android:title="Instagram" />
+                <item
+                    android:id="@+id/nav_facebook"
+                    android:icon="@drawable/ic_fb"
+                    android:title="Facebook" />
+                <item
+                    android:id="@+id/nav_twitter"
+                    android:icon="@drawable/ic_twitter"
+                    android:title="Twitter" />
+
+            </menu>
+        </item>
+    </group>
+
+    <group
+        android:checkableBehavior="single">
+        <item android:title="Support">
+            <menu>
+                <item
+                    android:id="@+id/nav_messenger"
+                    android:icon="@drawable/ic_messenger"
+                    android:title="Messenger" />
+                <item
+                    android:id="@+id/nav_email"
+                    android:icon="@drawable/ic_email"
+                    android:title="Email" />
+                            </menu>
+        </item>
+    </group>
+
+    <group
+        android:checkableBehavior="single">
+        <item android:title="App">
+            <menu>
+
+                <item
+                    android:id="@+id/nav_visit_us"
+                    android:icon="@drawable/ic_website"
+                    android:title="Visit us" />
+                <item
+                    android:id="@+id/nav_share"
+                    android:icon="@drawable/ic_share"
+                    android:title="Share" />
+                <item
+                    android:id="@+id/nav_rate"
+                    android:icon="@drawable/ic_rate"
+                    android:title="Rate app"/>
+                <item
+                    android:id="@+id/nav_terms"
+                    android:icon="@drawable/ic_terms"
+                    android:title="Terms and Conditions" />
+                <item
+                    android:id="@+id/nav_privacy_policy"
+                    android:icon="@drawable/ic_privacy_policy"
+                    android:title="Privacy Policy" />
+                <item
+                    android:id="@+id/nav_about_app"
+                    android:icon="@drawable/ic_info"
+                    android:title="About"/>
+
+            </menu>
+        </item>
+    </group>
+</menu>
+
