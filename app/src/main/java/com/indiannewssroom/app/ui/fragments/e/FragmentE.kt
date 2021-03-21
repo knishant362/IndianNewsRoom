@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ import com.indiannewssroom.app.util.Constants.Companion.bollywood_cinema
 import com.indiannewssroom.app.util.Constants.Companion.entertainment
 import com.indiannewssroom.app.util.Constants.Companion.humour
 import com.indiannewssroom.app.util.Constants.Companion.tv_and_serial
+import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
 
@@ -55,7 +57,7 @@ class FragmentE : Fragment() {
         mLinearLayoutManager = LinearLayoutManager(requireContext())
 
         setupRecyclerView()
-        firstApiCall()
+//        firstApiCall()
 
         mRecyclerView.apply {
             setHasFixedSize(true)
@@ -101,35 +103,48 @@ class FragmentE : Fragment() {
             this_category = chipCat
             pageNo = 1
             postFinish = 1
-            mainViewModel.apiCall(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_E)
+            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_E)
         }
 
-        mainViewModel.postResponseE.observe(viewLifecycleOwner, {
-            val postdata = it.data
-            if (postdata!=null)
-                mAdapter.setDataOther(postdata)
-            chipGroupVisibility(CG_VISIBLE)
-            if (pageNo==1){
-                Log.d("Thiss","htiss")
-            }else{
+        mainViewModel.getPostFE().observe(viewLifecycleOwner, {
+            when (it.status) {
+                Status.SUCCESS -> {
 
-                /** this is just to calculate the last ending position of item in RV ,
-                 *  to make it shift to this position again after new data is added*/
+                    val postdata = it.data
+                    if (postdata!=null)
+                        mAdapter.setDataOther(postdata)
+                    chipGroupVisibility(CG_VISIBLE)
+                    if (pageNo==1){
+                        Log.d("Thiss","htiss")
+                    }else{
 
-                val pos = (mAdapter.itemCount)
-                val myff = 9+(((pageNo-1)*20)-12)
-                val mf = pos-23
-                val diff = mf-myff
-                postFinish = diff
-                if (diff < 0){
-                    Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
+                        /** this is just to calculate the last ending position of item in RV ,
+                         *  to make it shift to this position again after new data is added*/
+
+                        val pos = (mAdapter.itemCount)
+                        val myff = 9+(((pageNo-1)*20)-12)
+                        val mf = pos-23
+                        val diff = mf-myff
+                        postFinish = diff
+                        if (diff < 0){
+                            Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
+                        }
+                        Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
+                        mRecyclerView.scrollToPosition(myff);
+                        isLoading = true
+                    }
+                    binding.refreshDataE.isRefreshing = false
+                    hideShimmerEffect()
                 }
-                Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
-                mRecyclerView.scrollToPosition(myff)
-                isLoading = true
+                Status.LOADING -> {
+                    showShimmerEffect()
+                }
+                Status.ERROR -> {
+                    //Handle Error
+                    hideShimmerEffect()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                }
             }
-            binding.refreshDataE.isRefreshing = false
-            hideShimmerEffect()
         })
 
         binding.refreshDataE.setOnRefreshListener {
@@ -138,7 +153,7 @@ class FragmentE : Fragment() {
             pageNo=1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_E)
+            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_E)
         }
 
         return binding.root
@@ -149,7 +164,7 @@ class FragmentE : Fragment() {
         /**this apiCall will only launch once(at startup)*/
         if (myTurn){
             isLoading = true
-            mainViewModel.apiCall(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_E)
+            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_E)
             myTurn = mainViewModel.isFirst
         }
     }
@@ -160,7 +175,7 @@ class FragmentE : Fragment() {
         if (isLoading){
             pageNo++
             Log.d("MyCalll", this_category)
-            mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_E)
+            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_E)
             isLoading = false
         }
     }

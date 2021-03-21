@@ -1,6 +1,7 @@
 package com.indiannewssroom.app.adapters
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -15,8 +16,8 @@ import com.indiannewssroom.app.ui.fragments.h.FragmentH
 import com.indiannewssroom.app.ui.fragments.home.HomeFragment
 import com.indiannewssroom.app.ui.fragments.i.FragmentI
 
-class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle)
-    : FragmentStateAdapter(fragmentManager, lifecycle) {
+class ViewPagerAdapter(fa: FragmentActivity)
+    : FragmentStateAdapter(fa) {
 
     override fun getItemCount(): Int {
         return fragments.size

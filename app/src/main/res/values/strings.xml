@@ -50,4 +50,32 @@
     <string name="social_media">सोशल मीडिया</string>
 
 
+    <string-array
+        name="categories">
+        <item>धर्म-कर्म</item>
+        <item>लाइफस्टाइल</item>
+        <item>मनोरंजन</item>
+        <item>दिलचस्प</item>
+        <item>खेल जगत</item>
+        <item>विज्ञान और तकनीक</item>
+        <item>अध्यात्म</item>
+        <item>राशिफल</item>
+        <item>व्रत और त्यौहार</item>
+        <item>वास्तु</item>
+        <item>चाणक्य नीति</item>
+        <item>स्वास्थ्य</item>
+        <item>रिलेशनशिप</item>
+        <item>फैशन</item>
+        <item>यात्रा</item>
+        <item>खाना-खजाना</item>
+        <item>खाना-खजाना</item>
+        <item>टेलीविजन</item>
+        <item>बॉलीवुड</item>
+        <item>हंसी-ठट्ठा</item>
+        <item>देश</item>
+        <item>विदेश</item>
+        <item>वायरल</item>
+        <item>सोशल मीडिया</item>
+    </string-array>
+
 </resources>

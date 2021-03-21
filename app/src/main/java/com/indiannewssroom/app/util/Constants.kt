@@ -64,6 +64,19 @@ class Constants {
         const val CG_VISIBLE = "Visible"
         const val CG_INVISIBLE = "Invisible"
 
+
+        /** Datastore */
+        const val PREFERENCES_NAME = "home_preferences"
+        const val PREFERENCES_CATEGORY_1 = "home_preferences"
+        const val PREFERENCES_CATEGORY_2 = "home_preferences"
+        const val PREFERENCES_CATEGORY_3 = "home_preferences"
+        const val PREFERENCES_CATEGORY_4 = "home_preferences"
+        const val PREFERENCES_CATEGORY_5 = "home_preferences"
+
+
+
+
+
     }
 
 }

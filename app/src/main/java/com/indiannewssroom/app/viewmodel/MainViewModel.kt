@@ -1,7 +1,9 @@
 package com.indiannewssroom.app.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
+import com.indiannewssroom.app.data.DataStoreRepository
 import com.indiannewssroom.app.data.NetworkResults
 import com.indiannewssroom.app.model.PostData
 import com.indiannewssroom.app.repository.RemoteDataSource
@@ -13,156 +15,201 @@ import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_E
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_F
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_G
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_H
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_HOME
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_I
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_HORIZONTAL
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_VERTICAL
-import kotlinx.coroutines.launch
+import com.indiannewssroom.app.util.Constants.Companion.bollywood_cinema
+import com.indiannewssroom.app.util.Constants.Companion.entertainment
+import com.indiannewssroom.app.util.Constants.Companion.humour
+import com.indiannewssroom.app.util.Constants.Companion.latest_news
+import com.indiannewssroom.app.util.Constants.Companion.viral_news
+import com.indiannewssroom.app.util.Resource
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
-class MainViewModel : ViewModel(){
+class MainViewModel(context: Context) : ViewModel(){
 
-//    val _networkText = MutableLiveData<Boolean>()
-//    val networkText : MutableLiveData<Boolean> get() = _networkText
+    /**  DATASTORE  */
 
-    private val _postResponseA = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseA : LiveData<NetworkResults<List<PostData>>> get() = _postResponseA
+    private val dataStoreRepository = DataStoreRepository(context)
+    val readHome = dataStoreRepository.readHomeCategories
 
-    private val _postResponseB = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseB : LiveData<NetworkResults<List<PostData>>> get() = _postResponseB
+    fun saveHomeCategories(
+        category1: String,
+        category2: String,
+        category3: String,
+        category4: String,
+        category5: String
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d("Sauda",category1 )
+        Log.d("Sauda",category2 )
+        Log.d("Sauda",category3 )
+        Log.d("Sauda",category4 )
+        Log.d("Sauda",category5 )
 
-    private val _postResponseC = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseC : LiveData<NetworkResults<List<PostData>>> get() = _postResponseC
+        dataStoreRepository.saveHomeCategories(category1, category2, category3, category4, category5)
+    }
 
-    private val _postResponseD = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseD : LiveData<NetworkResults<List<PostData>>> get() = _postResponseD
 
-    private val _postResponseE = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseE : LiveData<NetworkResults<List<PostData>>> get() = _postResponseE
 
-    private val _postResponseF = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseF : LiveData<NetworkResults<List<PostData>>> get() = _postResponseF
 
-    private val _postResponseG = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseG : LiveData<NetworkResults<List<PostData>>> get() = _postResponseG
+    /**  DATASTORE  */
 
-    private val _postResponseH = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseH : LiveData<NetworkResults<List<PostData>>> get() = _postResponseH
+    /** Default Categories*/
+//    var cat1 = viral_news.second
+//    var cat2 = entertainment.second
+//    var cat3 = bollywood_cinema.second
+//    var cat4 = latest_news.second
+//    var cat5 = humour.second
 
-    private val _postResponseI = MutableLiveData<NetworkResults<List<PostData>>>()
-    val postResponseI : LiveData<NetworkResults<List<PostData>>> get() = _postResponseI
+    /** Default Categories*/
 
-    var postResponseHorizontal: MutableLiveData<NetworkResults<List<PostData>>> = MutableLiveData()
-    var postResponseVertical: MutableLiveData<NetworkResults<List<PostData>>> = MutableLiveData()
 
     private val call = RemoteDataSource()
-    var horizontalList = mutableListOf<PostData>()
-    private var verticalList = arrayListOf<PostData>()
     val isFirst = false
 
-    /** Upper most function call in Fragments*/
-    fun apiCall(category: String,type : String, perPage: Int, page: Int, fragmentName: String) = viewModelScope.launch {
-        safeApiCallCategory(category, type, perPage, page, fragmentName)
+    private val myPosts = MutableLiveData<Resource<List<PostData>>>()
+    private val postsA = MutableLiveData<Resource<List<PostData>>>()
+    private val postsB = MutableLiveData<Resource<List<PostData>>>()
+    private val postsC = MutableLiveData<Resource<List<PostData>>>()
+    private val postsD = MutableLiveData<Resource<List<PostData>>>()
+    private val postsE = MutableLiveData<Resource<List<PostData>>>()
+    private val postsF = MutableLiveData<Resource<List<PostData>>>()
+    private val postsG = MutableLiveData<Resource<List<PostData>>>()
+    private val postsH = MutableLiveData<Resource<List<PostData>>>()
+    private val postsI = MutableLiveData<Resource<List<PostData>>>()
+
+
+    init {
+
     }
 
-    private suspend fun safeApiCallCategory(category: String, type: String, perPage: Int, page: Int, fragmentName: String = "default") {
-        val response = call.getPostCategory(perPage, page, category)
-        when(type){
-            TYPE_HORIZONTAL -> {
-                Log.d("CategoryHorizontal", "api called with pageno $category")
-                postResponseHorizontal.value = handleResponse(response, type)
-            }
-            TYPE_SINGLE -> {
-//                val data = handleResponse(response, type)
-//                Log.d("CategorySingle", "api called with pageno $category")
-//                Log.d("CategorySingle", "api called with pageno ${data.data!!.size}")
-                Log.d("CategoryHorizontal", "api called with pageno $category")
-                handleSingleData(fragmentName, response, type)
-            }
-            TYPE_VERTICAL -> {
-                Log.d("CategoryVertical", "api called with pageno ")
-                postResponseVertical.value = handleResponse(response, type)
+
+    fun fetchPosts(
+        myCat1: String, myCat2: String, myCat3: String, myCat4: String, myCat5: String
+    ) {
+        Log.d("NishantCat", "$myCat1  $myCat2  $myCat3  $myCat4  $myCat5")
+        viewModelScope.launch {
+            myPosts.postValue(Resource.loading(null))
+            try{
+
+                coroutineScope{
+                    val fetchPostCat0 = async{call.getPostCategory1(5,1,"389")}
+                    val fetchPostsCat1 = async{call.getPostCategory1(5,1,myCat1)}
+                    val fetchPostsCat2 = async{call.getPostCategory1(5,1,myCat2)}
+                    val fetchPostsCat3 = async{call.getPostCategory1(5,1,myCat3)}
+                    val fetchPostsCat4 = async{call.getPostCategory1(5,1,myCat4)}
+                    val fetchPostsCat5 = async{call.getPostCategory1(5,1,myCat5)}
+
+                    val post0 = fetchPostCat0.await()
+                    val post1 = fetchPostsCat1.await()
+                    val post2 = fetchPostsCat2.await()
+                    val post3 = fetchPostsCat3.await()
+                    val post4 = fetchPostsCat4.await()
+                    val post5 = fetchPostsCat5.await()
+
+                    val fetchposts = mutableListOf<PostData>()
+
+                    fetchposts.addAll(post0)
+                    fetchposts.addAll(post1)
+                    fetchposts.addAll(post2)
+                    fetchposts.addAll(post3)
+                    fetchposts.addAll(post4)
+                    fetchposts.addAll(post5)
+
+                    myPosts.postValue(Resource.success(fetchposts))
+                }
+            }catch (e: Exception) {
+                myPosts.postValue(Resource.error("Something Went Wrong", null))
             }
         }
     }
 
-    /**Here we determine from where the request is called*/
-    /**After determine that using FRAGMENT_NAME_$ , then we handle response accordingly */
-    /**We add data to their respective LiveData instance (ex - FragmentA -> _postResponseA) */
-    private fun handleSingleData(fragmentName: String, response: Response<List<PostData>>, type: String) {
+    fun getPosts(): LiveData<Resource<List<PostData>>> {
+        return myPosts
+    }
+
+
+    fun fetchPostSingle(category: String,type : String, perPage: Int, page: Int, fragmentName: String) {
+
+        Log.d("SentSender", category)
+        viewModelScope.launch {
+            handleData(Resource.loading(null), fragmentName)
+            try {
+                val postsFromApi = call.getPostCategory1(perPage,page,category)
+                handleData(Resource.success(postsFromApi), fragmentName)
+            } catch (e: Exception) {
+                handleData(Resource.error(e.toString(), null), fragmentName)
+            }
+        }
+    }
+
+
+    private fun handleData(
+        response : Resource<List<PostData>>,
+        fragmentName: String
+    ) {
         when(fragmentName){
             FRAGMENT_NAME_A->{
-                _postResponseA.value = handleResponse(response, type)
+                postsA.postValue(response)
             }
             FRAGMENT_NAME_B-> {
-                _postResponseB.value = handleResponse(response, type)
+                postsB.postValue(response)
             }
             FRAGMENT_NAME_C->{
-                _postResponseC.value = handleResponse(response, type)
+                postsC.postValue(response)
             }
             FRAGMENT_NAME_D-> {
-                _postResponseD.value = handleResponse(response, type)
+                postsD.postValue(response)
             }
             FRAGMENT_NAME_E->{
-                _postResponseE.value = handleResponse(response, type)
+                postsE.postValue(response)
             }
             FRAGMENT_NAME_F-> {
-                _postResponseF.value = handleResponse(response, type)
+                postsF.postValue(response)
             }
             FRAGMENT_NAME_G->{
-                _postResponseG.value = handleResponse(response, type)
+                postsG.postValue(response)
             }
             FRAGMENT_NAME_H-> {
-                _postResponseH.value = handleResponse(response, type)
+                postsH.postValue(response)
             }
             FRAGMENT_NAME_I-> {
-                _postResponseI.value = handleResponse(response, type)
+                postsI.postValue(response)
             }
         }
     }
 
-    private fun handleResponse(response: Response<List<PostData>>, type : String): NetworkResults<List<PostData>> {
-        return when {
-            response.message().toString().contains("timeout") -> {
-                NetworkResults.Error("Timeout")
-            }
-            response.code() == 402 -> {
-                NetworkResults.Error("API Key Limited.")
-            }
-            response.isSuccessful -> {
-                val posts = response.body()
-                return handleSuccess(posts, type)
-            }
-            else -> {
-                NetworkResults.Error(response.message())
-            }
-        }
-    }
 
-    private fun handleSuccess(posts: List<PostData>?, type : String): NetworkResults.Success<List<PostData>> {
-        if (posts != null) {
-            when(type){
-                TYPE_HORIZONTAL -> {
-                    horizontalList.addAll(posts)
-                }
-                TYPE_VERTICAL -> {
-                    verticalList.addAll(posts)
-                }
-            }
-        }
-        return when(type){
-            TYPE_HORIZONTAL -> {
-                NetworkResults.Success(horizontalList)
-            }
-            TYPE_VERTICAL -> {
-                NetworkResults.Success(verticalList)
-            }
-            else -> {
-                Log.d("CategorySingleP", "api called with pageno ${posts!!.size}")
-                NetworkResults.Success(posts)
-            }
-        }
+    fun getPostFA(): LiveData<Resource<List<PostData>>> {
+        return postsA
+    }
+    fun getPostFB(): LiveData<Resource<List<PostData>>> {
+        return postsB
+    }
+    fun getPostFC(): LiveData<Resource<List<PostData>>> {
+        return postsC
+    }
+    fun getPostFD(): LiveData<Resource<List<PostData>>> {
+        return postsD
+    }
+    fun getPostFE(): LiveData<Resource<List<PostData>>> {
+        return postsE
+    }
+    fun getPostFF(): LiveData<Resource<List<PostData>>> {
+        return postsF
+    }
+    fun getPostFG(): LiveData<Resource<List<PostData>>> {
+        return postsG
+    }
+    fun getPostFH(): LiveData<Resource<List<PostData>>> {
+        return postsH
+    }
+    fun getPostFI(): LiveData<Resource<List<PostData>>> {
+        return postsI
     }
 
 }
+

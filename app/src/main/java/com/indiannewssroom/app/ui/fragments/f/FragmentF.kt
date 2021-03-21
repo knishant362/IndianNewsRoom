@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.indiannewssroom.app.databinding.FragmentFBinding
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_F
 import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.dilchasp
+import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
 
@@ -82,31 +84,44 @@ class FragmentF : Fragment() {
             })
         }
 
-        mainViewModel.postResponseF.observe(viewLifecycleOwner, {
-            val postdata = it.data
-            if (postdata!=null)
-                mAdapter.setDataOther(postdata)
-            if (pageNo==1){
-                Log.d("Thiss","htiss")
-            }else{
+        mainViewModel.getPostFF().observe(viewLifecycleOwner, {
+            when (it.status) {
+                Status.SUCCESS -> {
 
-                /** this is just to calculate the last ending position of item in RV ,
-                 *  to make it shift to this position again after new data is added*/
+                    val postdata = it.data
+                    if (postdata!=null)
+                        mAdapter.setDataOther(postdata)
+                    if (pageNo==1){
+                        Log.d("Thiss","htiss")
+                    }else{
 
-                val pos = (mAdapter.itemCount)
-                val myff = 9+(((pageNo-1)*20)-12)
-                val mf = pos-23
-                val diff = mf-myff
-                postFinish = diff
-                if (diff < 0){
-                    Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
+                        /** this is just to calculate the last ending position of item in RV ,
+                         *  to make it shift to this position again after new data is added*/
+
+                        val pos = (mAdapter.itemCount)
+                        val myff = 9+(((pageNo-1)*20)-12)
+                        val mf = pos-23
+                        val diff = mf-myff
+                        postFinish = diff
+                        if (diff < 0){
+                            Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
+                        }
+                        Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
+                        mRecyclerView.scrollToPosition(myff)
+                        isLoading = true
+                    }
+                    binding.refreshDataF.isRefreshing = false
+                    hideShimmerEffect()
                 }
-                Log.d("ThisPosFinal", "${mf-myff}  $pageNo  $myff  $pos")
-                mRecyclerView.scrollToPosition(myff)
-                isLoading = true
+                Status.LOADING -> {
+                    showShimmerEffect()
+                }
+                Status.ERROR -> {
+                    //Handle Error
+                    hideShimmerEffect()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                }
             }
-            binding.refreshDataF.isRefreshing = false
-            hideShimmerEffect()
         })
 
         binding.refreshDataF.setOnRefreshListener {
@@ -114,7 +129,7 @@ class FragmentF : Fragment() {
             pageNo=1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.apiCall(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_F)
+            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_F)
         }
 
         return binding.root
@@ -123,7 +138,7 @@ class FragmentF : Fragment() {
         /**this apiCall will only launch once(at startup)*/
         if (myTurn){
             isLoading = true
-            mainViewModel.apiCall(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_F)
+            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_F)
             Log.d("MYKat", "called")
             myTurn = mainViewModel.isFirst
         }
@@ -133,7 +148,7 @@ class FragmentF : Fragment() {
         Log.d("MyCalll", isLoading.toString())
         if (isLoading){
             pageNo++
-            mainViewModel.apiCall(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_F)
+            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_F)
             isLoading = false
         }
     }
