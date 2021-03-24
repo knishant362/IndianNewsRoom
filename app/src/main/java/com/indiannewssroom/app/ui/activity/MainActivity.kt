@@ -1,12 +1,12 @@
-package com.indiannewssroom.app.ui
+package com.indiannewssroom.app.ui.activity
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -15,8 +15,10 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.indiannewssroom.app.R
 import com.indiannewssroom.app.adapters.ViewPagerAdapter
-import com.indiannewssroom.app.ui.about.AboutActivity
-import com.indiannewssroom.app.ui.category.CategoryActivity
+import com.indiannewssroom.app.ui.activity.bookmark.BookmarkActivity
+import com.indiannewssroom.app.ui.activity.category.CategoryActivity
+import com.indiannewssroom.app.ui.webview.WebViewActivity
+import com.indiannewssroom.app.util.Constants.Companion.INTENT_DATA
 import com.indiannewssroom.app.util.Constants.Companion.breaking_news
 import com.indiannewssroom.app.util.Constants.Companion.dilchasp
 import com.indiannewssroom.app.util.Constants.Companion.entertainment
@@ -28,7 +30,6 @@ import com.indiannewssroom.app.util.Constants.Companion.lifestyle
 import com.indiannewssroom.app.util.Constants.Companion.religion
 import com.indiannewssroom.app.util.Constants.Companion.science_and_technology
 import com.indiannewssroom.app.viewmodel.MainViewModel
-import com.indiannewssroom.app.viewmodel.MainViewModelFactory
 
 class MainActivity : FragmentActivity() {
 
@@ -44,8 +45,8 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mainViewModelFactory = MainViewModelFactory(this)
-        mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
+
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         toolbar = findViewById(R.id.drawerMenu)
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
@@ -56,7 +57,7 @@ class MainActivity : FragmentActivity() {
 
         initViewPager2WithFragments()
 
-//        mainViewModel.fetchPosts()
+
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START);
@@ -64,6 +65,28 @@ class MainActivity : FragmentActivity() {
 
         navView.setNavigationItemSelectedListener { myItem ->
             when(myItem.itemId){
+
+
+                R.id.nav_messenger -> {
+                    openApp("https://www.facebook.com/INRMedia/","com.facebook.katana" )
+                    true
+                }
+
+
+                R.id.nav_home_categories -> {
+                    startActivity(Intent(this, CategoryActivity::class.java))
+                    true
+                }
+
+                R.id.nav_bookmark -> {
+                    startActivity(Intent(this, BookmarkActivity::class.java))
+                    true
+                }
+
+                R.id.nav_email -> {
+                    sendEmail("inrmedianetwork@gmail.com","INDIAN NEWS ROOM")
+                    true
+                }
                 R.id.nav_youtube -> {
                     openApp("https://www.youtube.com/c/IndianNewsRoom","com.google.android.youtube" )
                     drawerState()
@@ -93,7 +116,7 @@ class MainActivity : FragmentActivity() {
                     true
                 }
                 R.id.nav_share -> {
-                    shareApp("https://play.google.com/store/apps/details?id=com.indiannewssroom.app")
+                    shareApp()
                     drawerState()
                     true
                 }
@@ -105,12 +128,22 @@ class MainActivity : FragmentActivity() {
                     drawerState()
                     true
                 }
-                R.id.nav_about_app -> {
-                    startActivity(Intent(this, AboutActivity::class.java))
+                R.id.nav_terms -> {
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra(INTENT_DATA, "https://www.indiannewsroom.com/terms-conditions/")
+                    startActivity(intent)
                     true
                 }
-                R.id.nav_home_categories -> {
-                    startActivity(Intent(this, CategoryActivity::class.java))
+                R.id.nav_privacy_policy -> {
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra(INTENT_DATA, "https://www.indiannewsroom.com/privacy-policy/")
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_about_app -> {
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra(INTENT_DATA, "https://www.indiannewsroom.com/about-us/")
+                    startActivity(intent)
                     true
                 }
                 else -> {
@@ -120,10 +153,26 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    private fun shareApp(link : String) {
+    private fun sendEmail(address: String, subject: String) {
+
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.type = "*/*"
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(address))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
+
+        try {
+            startActivity(emailIntent)
+        }catch (e:Exception){
+            Toast.makeText(this,e.message, Toast.LENGTH_LONG).show()
+        }
+
+    }
+
+
+    private fun shareApp() {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT,link)
+            putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=com.indiannewssroom.app")
             type = "text/plain"
         }
         val shareIntent = Intent.createChooser(sendIntent, null)

@@ -7,6 +7,9 @@ class Constants {
         const val INTENT_DATA = "MyIntent"
         const val BUNDLE_DATA = "MyBundle"
 
+
+        /**        website categories       */
+
         val homeTabName = "होम"
 
         val breaking_news : Pair<String, String> = Pair("ब्रेकिंग न्यूज","2656")
@@ -46,7 +49,9 @@ class Constants {
 
         val general_knowledge : Pair<String, String> = Pair("सामान्य ज्ञान","389")
 
-        const val FRAGMENT_NAME_HOME = "HOME"
+        /**        website categories        */
+
+
         const val FRAGMENT_NAME_A = "A"
         const val FRAGMENT_NAME_B = "B"
         const val FRAGMENT_NAME_C = "C"
@@ -57,25 +62,11 @@ class Constants {
         const val FRAGMENT_NAME_H = "H"
         const val FRAGMENT_NAME_I = "I"
 
-        const val TYPE_SINGLE = "single"
-        const val TYPE_HORIZONTAL = "horizontal"
-        const val TYPE_VERTICAL = "vertical"
-
         const val CG_VISIBLE = "Visible"
         const val CG_INVISIBLE = "Invisible"
 
-
-        /** Datastore */
-        const val PREFERENCES_NAME = "home_preferences"
-        const val PREFERENCES_CATEGORY_1 = "home_preferences"
-        const val PREFERENCES_CATEGORY_2 = "home_preferences"
-        const val PREFERENCES_CATEGORY_3 = "home_preferences"
-        const val PREFERENCES_CATEGORY_4 = "home_preferences"
-        const val PREFERENCES_CATEGORY_5 = "home_preferences"
-
-
-
-
+        const val POST_TABLE = "post_table"
+        const val POST_DATABASE = "post_database"
 
     }
 

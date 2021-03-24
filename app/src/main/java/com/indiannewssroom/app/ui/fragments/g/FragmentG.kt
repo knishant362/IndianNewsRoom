@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.indiannewssroom.app.adapters.VerticalAdapter2
 import com.indiannewssroom.app.databinding.FragmentGBinding
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_G
-import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.game_and_player
 import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
@@ -114,7 +113,7 @@ class FragmentG : Fragment() {
                     hideShimmerEffect()
                 }
                 Status.LOADING -> {
-                    showShimmerEffect()
+                    showSnackBar("Loading")
                 }
                 Status.ERROR -> {
                     //Handle Error
@@ -129,7 +128,7 @@ class FragmentG : Fragment() {
             pageNo=1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_G)
+            mainViewModel.fetchPostSingle(this_category,  perPage, pageNo, FRAGMENT_NAME_G)
         }
 
         return binding.root
@@ -140,7 +139,7 @@ class FragmentG : Fragment() {
         /** this apiCall will only launch once(at startup) */
         if (myTurn){
             isLoading = true
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_G)
+            mainViewModel.fetchPostSingle(this_category,  perPage, pageNo, FRAGMENT_NAME_G)
             Log.d("MYKat", "called")
             myTurn = mainViewModel.isFirst
         }
@@ -151,7 +150,7 @@ class FragmentG : Fragment() {
     private fun updateRecyclerView() {
         if (isLoading){
             pageNo++
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_G)
+            mainViewModel.fetchPostSingle(this_category, perPage,pageNo, FRAGMENT_NAME_G)
             isLoading = false
         }
 
@@ -180,6 +179,11 @@ class FragmentG : Fragment() {
 
     private fun hideShimmerEffect() {
         mRecyclerView.hideShimmer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

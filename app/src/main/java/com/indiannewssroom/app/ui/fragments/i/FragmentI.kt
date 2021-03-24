@@ -12,13 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.indiannewssroom.app.R
 import com.indiannewssroom.app.adapters.VerticalAdapter2
-import com.indiannewssroom.app.databinding.FragmentFBinding
 import com.indiannewssroom.app.databinding.FragmentIBinding
-import com.indiannewssroom.app.util.Constants
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_I
-import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.general_knowledge
 import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
@@ -119,7 +115,7 @@ class FragmentI : Fragment() {
                     hideShimmerEffect()
                 }
                 Status.LOADING -> {
-                    showShimmerEffect()
+                    showSnackBar("Loading")
                 }
                 Status.ERROR -> {
                     //Handle Error
@@ -134,7 +130,7 @@ class FragmentI : Fragment() {
             pageNo=1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.fetchPostSingle( this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_I )
+            mainViewModel.fetchPostSingle( this_category, perPage, pageNo, FRAGMENT_NAME_I )
         }
 
         return binding.root
@@ -147,7 +143,7 @@ class FragmentI : Fragment() {
         /**this apiCall will only launch once(at startup)*/
         if (myTurn){
             isLoading = true
-            mainViewModel.fetchPostSingle( this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_I )
+            mainViewModel.fetchPostSingle( this_category,  perPage, pageNo, FRAGMENT_NAME_I )
             Log.d("MYKat", "called")
             myTurn = mainViewModel.isFirst
         }
@@ -158,7 +154,7 @@ class FragmentI : Fragment() {
         Log.d("MyCalll", isLoading.toString())
         if (isLoading){
             pageNo++
-            mainViewModel.fetchPostSingle( this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_I )
+            mainViewModel.fetchPostSingle( this_category, perPage, pageNo, FRAGMENT_NAME_I )
             isLoading = false
         }
     }
@@ -184,6 +180,11 @@ class FragmentI : Fragment() {
 
     private fun hideShimmerEffect() {
         mRecyclerView.hideShimmer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

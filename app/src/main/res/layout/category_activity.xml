@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.category.PostFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.fragments.category.PostFragment">
+
+
+            <Button
+                android:id="@+id/cat1"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
+                android:backgroundTint="#ECC1B9"
+                android:text="@string/breaking"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#723126"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCatMy" />
+
+            <Button
+                android:id="@+id/cat2"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#A1EDA4"
+                android:text="@string/latestnew"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#102A11"
+                app:layout_constraintEnd_toEndOf="@+id/cat1"
+                app:layout_constraintStart_toStartOf="@+id/cat1"
+                app:layout_constraintTop_toBottomOf="@+id/cat1" />
+
+            <Button
+                android:id="@+id/cat3"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#9FC3EF"
+                android:text="@string/ReligionCategory"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#172235"
+                app:layout_constraintEnd_toEndOf="@+id/cat2"
+                app:layout_constraintStart_toStartOf="@+id/cat2"
+                app:layout_constraintTop_toBottomOf="@+id/cat2" />
+
+
+            <Button
+                android:id="@+id/cat4"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#ECDFB9"
+                android:text="@string/LifeStyleCategory"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#483E20"
+                app:layout_constraintEnd_toEndOf="@+id/cat3"
+                app:layout_constraintStart_toStartOf="@+id/cat3"
+                app:layout_constraintTop_toBottomOf="@+id/cat3" />
+
+
+            <Button
+                android:id="@+id/cat5"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#D49EFB"
+                android:text="@string/Entertainment"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#1C132C"
+                app:layout_constraintEnd_toEndOf="@+id/cat4"
+                app:layout_constraintStart_toStartOf="@+id/cat4"
+                app:layout_constraintTop_toBottomOf="@+id/cat4" />
+
+
+            <Button
+                android:id="@+id/cat6"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#90ECF8"
+                android:text="@string/dilchasp"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#1C4045"
+                app:layout_constraintEnd_toEndOf="@+id/cat5"
+                app:layout_constraintStart_toStartOf="@+id/cat5"
+                app:layout_constraintTop_toBottomOf="@+id/cat5" />
+
+
+            <Button
+                android:id="@+id/cat7"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#F19F9F"
+                android:text="@string/gameAndPlayer"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#3E1B15"
+                app:layout_constraintEnd_toEndOf="@+id/cat6"
+                app:layout_constraintStart_toStartOf="@+id/cat6"
+                app:layout_constraintTop_toBottomOf="@+id/cat6" />
+
+
+            <Button
+                android:id="@+id/cat8"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#BDF180"
+                android:text="@string/sciTech"
+                android:fontFamily="@font/hind_medium"
+                android:textColor="#3A4C25"
+                app:layout_constraintEnd_toEndOf="@+id/cat7"
+                app:layout_constraintStart_toStartOf="@+id/cat7"
+                app:layout_constraintTop_toBottomOf="@+id/cat7" />
+
+            <Button
+                android:id="@+id/cat9"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="#F4C074"
+                android:fontFamily="@font/hind_medium"
+                android:text="@string/general"
+                android:textColor="#4D4018"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/cat7"
+                app:layout_constraintStart_toStartOf="@+id/cat7"
+                app:layout_constraintTop_toBottomOf="@+id/cat8" />
+
+            <TextView
+                android:id="@+id/txtCatMy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/categories"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/hind_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

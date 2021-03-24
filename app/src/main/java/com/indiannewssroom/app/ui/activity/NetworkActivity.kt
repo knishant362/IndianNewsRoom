@@ -1,4 +1,4 @@
-package com.indiannewssroom.app.ui
+package com.indiannewssroom.app.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

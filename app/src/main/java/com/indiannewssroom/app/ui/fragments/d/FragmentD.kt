@@ -15,11 +15,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.indiannewssroom.app.adapters.VerticalAdapter2
 import com.indiannewssroom.app.databinding.FragmentDBinding
-import com.indiannewssroom.app.util.Constants
 import com.indiannewssroom.app.util.Constants.Companion.CG_INVISIBLE
 import com.indiannewssroom.app.util.Constants.Companion.CG_VISIBLE
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_D
-import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.fashion_and_style
 import com.indiannewssroom.app.util.Constants.Companion.food_and_recipes
 import com.indiannewssroom.app.util.Constants.Companion.ghrelu_nuskhe
@@ -42,7 +40,7 @@ class FragmentD : Fragment() {
     private var this_category = lifestyle.second
 
     private var myTurn = true
-    private var isLoading = true
+    private var isLoading = false
     private var userScroll = true
     private var postFinish = 1
     private var pageNo = 1
@@ -105,7 +103,7 @@ class FragmentD : Fragment() {
             this_category = chipCat
             pageNo = 1
             postFinish = 1
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_D)
+            mainViewModel.fetchPostSingle(this_category, perPage, pageNo, FRAGMENT_NAME_D)
         }
 
         mainViewModel.getPostFD().observe(viewLifecycleOwner, {
@@ -139,7 +137,7 @@ class FragmentD : Fragment() {
                     hideShimmerEffect()
                 }
                 Status.LOADING -> {
-                    showShimmerEffect()
+                    showSnackBar("Loading")
                 }
                 Status.ERROR -> {
                     //Handle Error
@@ -156,7 +154,7 @@ class FragmentD : Fragment() {
             pageNo=1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_D)
+            mainViewModel.fetchPostSingle(this_category, perPage, pageNo, FRAGMENT_NAME_D)
         }
 
         return binding.root
@@ -167,7 +165,7 @@ class FragmentD : Fragment() {
         /**this apiCall will only launch once(at startup)*/
         if (myTurn){
             isLoading = true
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_D)
+            mainViewModel.fetchPostSingle(this_category, perPage, pageNo, FRAGMENT_NAME_D)
             Log.d("MYKat", "called")
             myTurn = mainViewModel.isFirst
         }
@@ -179,7 +177,7 @@ class FragmentD : Fragment() {
         Log.d("MyCalll", isLoading.toString())
         if (isLoading){
             pageNo++
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_D)
+            mainViewModel.fetchPostSingle(this_category, perPage,pageNo, FRAGMENT_NAME_D)
             isLoading = false
         }
     }
@@ -247,5 +245,9 @@ class FragmentD : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }

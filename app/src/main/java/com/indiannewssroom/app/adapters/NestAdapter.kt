@@ -43,7 +43,7 @@ class NestAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
     }
 
     private fun setVerticalList(recyclerView: RecyclerView?) {
-        val verticalList = VerticalAdapter2(context)
+        val verticalList = HomeVerticalAdapter(context)
         verticalList.setDataOther(postdatavertical)
         recyclerView?.setHasFixedSize(true)
         recyclerView?.layoutManager = LinearLayoutManager(context)
@@ -52,7 +52,7 @@ class NestAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerV
     }
 
     private fun setHorizontalList(recyclerView: RecyclerView?) {
-        val horizontalList = HorizontalAdapter(recyclerView!!)
+        val horizontalList = HorizontalAdapter(recyclerView!!, context)
         horizontalList.setData(postdatahorizontal)
         recyclerView?.setHasFixedSize(true)
         recyclerView?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

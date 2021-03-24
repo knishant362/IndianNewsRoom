@@ -8,29 +8,26 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.indiannewssroom.app.R
 import com.indiannewssroom.app.adapters.NestAdapter
-import com.indiannewssroom.app.adapters.PostAdapter
 import com.indiannewssroom.app.databinding.FragmentHomeBinding
-import com.indiannewssroom.app.databinding.HorixontalPostRowLayoutBinding
 import com.indiannewssroom.app.model.PostData
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_HOME
-import com.indiannewssroom.app.util.Constants.Companion.TYPE_HORIZONTAL
+import com.indiannewssroom.app.util.Constants
 import com.indiannewssroom.app.util.Constants.Companion.bollywood_cinema
 import com.indiannewssroom.app.util.Constants.Companion.breaking_news
-import com.indiannewssroom.app.util.Constants.Companion.game_and_player
+import com.indiannewssroom.app.util.Constants.Companion.dilchasp
+import com.indiannewssroom.app.util.Constants.Companion.entertainment
 import com.indiannewssroom.app.util.Constants.Companion.general_knowledge
+import com.indiannewssroom.app.util.Constants.Companion.health
+import com.indiannewssroom.app.util.Constants.Companion.latest_news
+import com.indiannewssroom.app.util.Constants.Companion.lifestyle
+import com.indiannewssroom.app.util.Constants.Companion.relationship
+import com.indiannewssroom.app.util.Constants.Companion.social_media
+import com.indiannewssroom.app.util.Constants.Companion.spiritual
 import com.indiannewssroom.app.util.Constants.Companion.viral_news
 import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class HomeFragment : Fragment() {
 
@@ -39,11 +36,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mAdapter: NestAdapter
     private lateinit var mRecyclerView: ShimmerRecyclerView
-    private var isLoading = true
-    private var userScroll = true
-    private var pageNo = 1
     private var myTurn = true
-    private var perPage = 5
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -62,40 +55,12 @@ class HomeFragment : Fragment() {
         mAdapter.groupData(list)
 
         setupRecyclerView()
-
-        readCategories()
         setupObservers()
+        firstApiCall()
 
 
         return binding.root
     }
-
-    private fun readCategories() {
-
-        mainViewModel.readHome.asLiveData().observe(viewLifecycleOwner, {value ->
-
-            Log.d("HRR", value.category1)
-            Log.d("HRR", value.category2)
-            Log.d("HRR", value.category3)
-            Log.d("HRR", value.category4)
-            Log.d("HRR", value.category5)
-            mainViewModel.fetchPosts(value.category1,value.category2,value.category3,value.category4,value.category5 )
-
-        }
-        )
-
-//        mainViewModel.readHome.asLiveData().observe(viewLifecycleOwner) {
-//
-//            Log.d("HRR", it.category1)
-//            Log.d("HRR", it.category2)
-//            Log.d("HRR", it.category3)
-//            Log.d("HRR", it.category4)
-//            Log.d("HRR", it.category5)
-//
-//            mainViewModel.fetchPosts(it.category1,it.category2,it.category3,it.category4,it.category5 )
-//        }
-    }
-
 
     private fun setupObservers() {
         mainViewModel.getPosts().observe(viewLifecycleOwner, {
@@ -104,8 +69,8 @@ class HomeFragment : Fragment() {
                     hideShimmerEffect()
                     it.data?.let { users -> if (users!=null){
                         Log.d("UserSize", users.size.toString())
-                        renderHorizontalList(users.subList(0,4))
-                        renderVerticalList(users.subList(5,users.lastIndex))
+                        renderHorizontalList(users.subList(0,14))
+                        renderVerticalList(users.subList(15,users.lastIndex))
                     } }
                 }
                 Status.LOADING -> {
@@ -122,21 +87,37 @@ class HomeFragment : Fragment() {
     }
 
 
+    private fun firstApiCall() {
+        if (myTurn){
+            mainViewModel.fetchPosts(slideCat(), verticalCat())
+            Log.d("Cut12", "called")
+            myTurn = mainViewModel.isFirst
+        }
+    }
 
 
+    private fun verticalCat(): List<String> {
+        val vertical = mutableListOf<String>()
+        vertical.add(social_media.second)
+        vertical.add(spiritual.second)
+        vertical.add(lifestyle.second)
+        vertical.add(health.second)
+        vertical.add(bollywood_cinema.second)
+        vertical.add(general_knowledge.second)
+        return vertical
+    }
 
+    private fun slideCat(): List<String> {
+        val slide = mutableListOf<String>()
+        slide.add(breaking_news.second)
+        slide.add(latest_news.second)
+        slide.add(viral_news.second)
+        slide.add(dilchasp.second)
+        slide.add(entertainment.second)
+        slide.add(relationship.second)
+        return slide
+    }
 
-//    private fun firstApiCall() {
-//        if (myTurn){
-//            mainViewModel.apiCall(breaking_news.second, TYPE_HORIZONTAL,perPage, pageNo, FRAGMENT_NAME_HOME)
-//            mainViewModel.apiCall(bollywood_cinema.second, TYPE_HORIZONTAL,perPage, pageNo, FRAGMENT_NAME_HOME)
-//            mainViewModel.apiCall(game_and_player.second, TYPE_HORIZONTAL, perPage, pageNo, FRAGMENT_NAME_HOME)
-//            mainViewModel.apiCall(viral_news.second, TYPE_HORIZONTAL, perPage, pageNo, FRAGMENT_NAME_HOME)
-//            mainViewModel.apiCall(general_knowledge.second, TYPE_HORIZONTAL, perPage, pageNo, FRAGMENT_NAME_HOME)
-//            Log.d("Cut12", "called")
-//            myTurn = mainViewModel.isFirst
-//        }
-//    }
 
     private fun renderHorizontalList(users: List<PostData>) {
         mAdapter.setHorizontalData(users)
@@ -157,6 +138,11 @@ class HomeFragment : Fragment() {
 
     private fun hideShimmerEffect() {
         mRecyclerView.hideShimmer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

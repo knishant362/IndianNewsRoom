@@ -19,7 +19,6 @@ import com.indiannewssroom.app.databinding.FragmentBBinding
 import com.indiannewssroom.app.util.Constants.Companion.CG_INVISIBLE
 import com.indiannewssroom.app.util.Constants.Companion.CG_VISIBLE
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_B
-import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.international_news
 import com.indiannewssroom.app.util.Constants.Companion.latest_news
 import com.indiannewssroom.app.util.Constants.Companion.national_news
@@ -103,7 +102,7 @@ class FragmentB : Fragment() {
             this_category = chipCat
             pageNo = 1
             postFinish = 1
-            mainViewModel.fetchPostSingle( this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_B )
+            mainViewModel.fetchPostSingle( this_category, perPage, pageNo, FRAGMENT_NAME_B )
         }
 
         mainViewModel.getPostFB().observe(viewLifecycleOwner, {
@@ -137,7 +136,7 @@ class FragmentB : Fragment() {
                     hideShimmerEffect()
                 }
                 Status.LOADING -> {
-                    showShimmerEffect()
+                    showSnackBar("Loading")
                 }
                 Status.ERROR -> {
                     //Handle Error
@@ -153,7 +152,7 @@ class FragmentB : Fragment() {
             pageNo = 1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_B)
+            mainViewModel.fetchPostSingle(this_category,perPage,pageNo, FRAGMENT_NAME_B)
         }
         return binding.root
     }
@@ -163,7 +162,7 @@ class FragmentB : Fragment() {
         /**this apiCall will only launch once(at startup)*/
         if (myTurn){
             isLoading = true
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_B)
+            mainViewModel.fetchPostSingle(this_category,perPage, pageNo, FRAGMENT_NAME_B)
             myTurn = mainViewModel.isFirst
         }
     }
@@ -175,7 +174,7 @@ class FragmentB : Fragment() {
         if (isLoading){
             pageNo++
             Log.d("MyCalll", this_category)
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_B)
+            mainViewModel.fetchPostSingle(this_category, perPage,pageNo, FRAGMENT_NAME_B)
             isLoading = false
         }
     }
@@ -239,6 +238,10 @@ class FragmentB : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 
 }

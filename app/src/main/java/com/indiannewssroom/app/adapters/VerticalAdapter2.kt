@@ -3,11 +3,8 @@ package com.indiannewssroom.app.adapters
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -15,26 +12,8 @@ import com.indiannewssroom.app.R
 import com.indiannewssroom.app.databinding.BigArticleRowLayoutBinding
 import com.indiannewssroom.app.databinding.PostRowLayoutBinding
 import com.indiannewssroom.app.model.PostData
-import com.indiannewssroom.app.ui.DetailsActivity
-import com.indiannewssroom.app.ui.fragments.a.FragmentADirections
-import com.indiannewssroom.app.ui.fragments.b.FragmentBDirections
-import com.indiannewssroom.app.ui.fragments.c.FragmentCDirections
-import com.indiannewssroom.app.ui.fragments.d.FragmentDDirections
-import com.indiannewssroom.app.ui.fragments.e.FragmentEDirections
-import com.indiannewssroom.app.ui.fragments.f.FragmentFDirections
-import com.indiannewssroom.app.ui.fragments.g.FragmentGDirections
-import com.indiannewssroom.app.ui.fragments.h.FragmentHDirections
-import com.indiannewssroom.app.ui.fragments.home.HomeFragmentDirections
+import com.indiannewssroom.app.ui.activity.DetailsActivity
 import com.indiannewssroom.app.util.Constants.Companion.BUNDLE_DATA
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_A
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_B
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_C
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_D
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_E
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_F
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_G
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_H
-import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_HOME
 import com.indiannewssroom.app.util.Constants.Companion.INTENT_DATA
 import com.indiannewssroom.app.util.PostDiffUtils
 import kotlinx.coroutines.CoroutineScope
@@ -153,6 +132,16 @@ class VerticalAdapter2 (val context: Context): RecyclerView.Adapter<RecyclerView
 //        postdata.clear()
         postdata.addAll(data)
         diffUtilResult.dispatchUpdatesTo(this)
+    }
+
+
+    fun filteredList(data: List<PostData>) {
+//        val myDiffUtil = PostDiffUtils(postdata, data)
+//        val diffUtilResult = DiffUtil.calculateDiff(myDiffUtil)
+        postdata.clear()
+        postdata.addAll(data)
+        notifyDataSetChanged()
+//        diffUtilResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemId(position: Int): Long {

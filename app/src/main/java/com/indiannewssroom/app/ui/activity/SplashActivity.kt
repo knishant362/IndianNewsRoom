@@ -1,4 +1,4 @@
-package com.indiannewssroom.app.ui
+package com.indiannewssroom.app.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,13 +6,10 @@ import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import com.androidstudy.networkmanager.Tovuti
 import com.indiannewssroom.app.R
+import com.indiannewssroom.app.ui.activity.NetworkActivity
 import com.indiannewssroom.app.viewmodel.MainViewModel
-import com.indiannewssroom.app.viewmodel.MainViewModelFactory
-
 
 class SplashActivity : AppCompatActivity() {
 
@@ -22,11 +19,17 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+
+//        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         this.window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         supportActionBar?.hide()
+
+//        firstApiCall()
+
 
         val hand = Handler()
         Tovuti.from(this).monitor { connectionType, isConnected, isFast ->
@@ -38,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
                             Intent(this@SplashActivity, MainActivity::class.java)
                         )
                         finish()
-                    }, 4000
+                    }, 3000
                 )
             } else {
                 hand.postDelayed(
@@ -47,25 +50,15 @@ class SplashActivity : AppCompatActivity() {
                             Intent(this@SplashActivity, NetworkActivity::class.java)
                         )
                         finish()
-                    }, 4000
+                    }, 3000
                 )
             }
         }
 
-        val mainViewModelFactory = MainViewModelFactory(this)
-        mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainViewModel::class.java)
-
-//        mainViewModel.readHomeCategories.asLiveData().observe(this,{
-//            mainViewModel.cat1 = it.category1
-//            mainViewModel.cat2 = it.category2
-//            mainViewModel.cat3 = it.category3
-//            mainViewModel.cat4 = it.category4
-//            mainViewModel.cat5 = it.category5
-//        })
     }
 
     override fun onStop() {
         super.onStop()
-        Tovuti.from(this).stop();
+        Tovuti.from(this).stop()
     }
 }

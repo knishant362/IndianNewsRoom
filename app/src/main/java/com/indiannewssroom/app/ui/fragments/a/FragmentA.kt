@@ -1,6 +1,8 @@
 package com.indiannewssroom.app.ui.fragments.a
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -17,11 +19,11 @@ import com.indiannewssroom.app.adapters.VerticalAdapter2
 import com.indiannewssroom.app.databinding.FragmentABinding
 import com.indiannewssroom.app.model.PostData
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_A
-import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.breaking_news
 import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
+import java.util.*
 
 class FragmentA : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -38,6 +40,7 @@ class FragmentA : Fragment() {
     private var postFinish = 1
     private var pageNo = 1
     private var perPage = 20
+    val allPost = mutableListOf<PostData>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -72,10 +75,10 @@ class FragmentA : Fragment() {
                     if (userScroll && (visibleItemCount + pastVisibleItems) == totalItem && dy > 0) {
                         userScroll = false
                         if (postFinish>=0){
-                            showSnackBar("Loading")
+//                            showSnackBar("Loading")
                             updateRecyclerView()
                         }else{
-                            showSnackBar("That's all for Now!")
+//                            showSnackBar("That's all for Now!")
                         }
                     }
                 }
@@ -87,8 +90,11 @@ class FragmentA : Fragment() {
                 Status.SUCCESS -> {
 
                     val postdata = it.data
-                    if (postdata!=null)
+                    if (postdata!=null){
+                        allPost.addAll(postdata)
                         mAdapter.setDataOther(postdata)
+                    }
+
                     if (pageNo==1){
                         Log.d("Thiss","htiss")
                     }else{
@@ -112,7 +118,7 @@ class FragmentA : Fragment() {
                     hideShimmerEffect()
                 }
                 Status.LOADING -> {
-                    showShimmerEffect()
+//                    showSnackBar("Loading")
                 }
                 Status.ERROR -> {
                     //Handle Error
@@ -127,20 +133,51 @@ class FragmentA : Fragment() {
             pageNo = 1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_A)
+            mainViewModel.fetchPostSingle(this_category,perPage,pageNo, FRAGMENT_NAME_A)
         }
+
+        binding.etSearchPost.addTextChangedListener (object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                filterPost(s.toString())
+
+            }
+        })
+
 
         return binding.root
     }
 
+    private fun filterPost(text: String) {
 
+        val filtereList = mutableListOf<PostData>()
+
+        for (item in allPost){
+            if (item.title?.rendered?.toLowerCase(Locale.ROOT)
+                    ?.contains(text.toLowerCase(Locale.ROOT)) == true
+            ) {
+                filtereList.add(item)
+                Log.d("TTTT", item.title.toString())
+            }
+        }
+        mAdapter.filteredList(filtereList)
+
+    }
 
 
     private fun firstApiCall() {
         /**this apiCall will only launch once(at startup)*/
         if (myTurn){
             isLoading = true
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_A)
+            mainViewModel.fetchPostSingle(this_category, perPage, pageNo, FRAGMENT_NAME_A)
             Log.d("MYKat", "called")
             myTurn = mainViewModel.isFirst
         }
@@ -151,18 +188,18 @@ class FragmentA : Fragment() {
         Log.d("MyCalll", isLoading.toString())
         if (isLoading){
             pageNo++
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_A)
+            mainViewModel.fetchPostSingle(this_category,perPage,pageNo, FRAGMENT_NAME_A)
             isLoading = false
         }
     }
 
-
-    private fun showSnackBar(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-    }
+//
+//    private fun showSnackBar(message: String) {
+//        view?.let {
+//            Snackbar.make(it, message, Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+//        }
+//    }
 
 
     private fun setupRecyclerView() {
@@ -180,5 +217,11 @@ class FragmentA : Fragment() {
     private fun hideShimmerEffect() {
         mRecyclerView.hideShimmer()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }
 

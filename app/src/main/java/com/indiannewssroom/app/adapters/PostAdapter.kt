@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -13,7 +12,7 @@ import com.indiannewssroom.app.R
 import com.indiannewssroom.app.databinding.BigHomeRowLayoutBinding
 import com.indiannewssroom.app.databinding.PostRowLayoutBinding
 import com.indiannewssroom.app.model.PostData
-import com.indiannewssroom.app.ui.DetailsActivity
+import com.indiannewssroom.app.ui.activity.DetailsActivity
 import com.indiannewssroom.app.util.Constants.Companion.BUNDLE_DATA
 import com.indiannewssroom.app.util.Constants.Companion.INTENT_DATA
 import com.indiannewssroom.app.util.PostDiffUtils

@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.indiannewssroom.app.adapters.VerticalAdapter2
 import com.indiannewssroom.app.databinding.FragmentFBinding
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_F
-import com.indiannewssroom.app.util.Constants.Companion.TYPE_SINGLE
 import com.indiannewssroom.app.util.Constants.Companion.dilchasp
 import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
@@ -114,7 +113,7 @@ class FragmentF : Fragment() {
                     hideShimmerEffect()
                 }
                 Status.LOADING -> {
-                    showShimmerEffect()
+                    showSnackBar("Loading")
                 }
                 Status.ERROR -> {
                     //Handle Error
@@ -129,7 +128,7 @@ class FragmentF : Fragment() {
             pageNo=1
             postFinish = 1
             mAdapter.clearList()
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_F)
+            mainViewModel.fetchPostSingle(this_category, perPage, pageNo, FRAGMENT_NAME_F)
         }
 
         return binding.root
@@ -138,7 +137,7 @@ class FragmentF : Fragment() {
         /**this apiCall will only launch once(at startup)*/
         if (myTurn){
             isLoading = true
-            mainViewModel.fetchPostSingle(this_category, TYPE_SINGLE, perPage, pageNo, FRAGMENT_NAME_F)
+            mainViewModel.fetchPostSingle(this_category,  perPage, pageNo, FRAGMENT_NAME_F)
             Log.d("MYKat", "called")
             myTurn = mainViewModel.isFirst
         }
@@ -148,7 +147,7 @@ class FragmentF : Fragment() {
         Log.d("MyCalll", isLoading.toString())
         if (isLoading){
             pageNo++
-            mainViewModel.fetchPostSingle(this_category,TYPE_SINGLE, perPage,pageNo, FRAGMENT_NAME_F)
+            mainViewModel.fetchPostSingle(this_category, perPage,pageNo, FRAGMENT_NAME_F)
             isLoading = false
         }
     }
@@ -174,5 +173,9 @@ class FragmentF : Fragment() {
         mRecyclerView.hideShimmer()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }

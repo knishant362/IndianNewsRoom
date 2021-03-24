@@ -48,10 +48,14 @@
     <string name="internation_news">विदेश</string>
     <string name="viral_news">वायरल</string>
     <string name="social_media">सोशल मीडिया</string>
+    <string name="web_footer_notice">Copyright © 2021 Indian News Room. All Right Reserved</string>
+    <string name="breaking">ब्रेकिंग न्यूज</string>
+    <string name="latestnew">खबरें</string>
+    <string name="general">सामान्य ज्ञान</string>
+    <string name="categories">Categories</string>
 
 
-    <string-array
-        name="categories">
+    <string-array name="categories">
         <item>धर्म-कर्म</item>
         <item>लाइफस्टाइल</item>
         <item>मनोरंजन</item>

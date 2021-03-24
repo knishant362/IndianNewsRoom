@@ -7,12 +7,16 @@
 
     <group
         android:checkableBehavior="single">
-        <item android:title="User">
+        <item android:title="Menu">
             <menu>
                 <item
+                    android:id="@+id/nav_home"
+                    android:icon="@drawable/ic_home"
+                    android:title="Home" />
+                <item
                     android:id="@+id/nav_home_categories"
-                    android:icon="@drawable/ic_pin"
-                    android:title="Home Category" />
+                    android:icon="@drawable/ic_menus"
+                    android:title="Category" />
                 <item
                     android:id="@+id/nav_bookmark"
                     android:icon="@drawable/ic_bookmark"
@@ -27,21 +31,23 @@
         <item android:title="Social">
             <menu>
                 <item
-                    android:id="@+id/nav_youtube"
-                    android:icon="@drawable/ic_youtube"
-                    android:title="YouTube" />
+                    android:id="@+id/nav_facebook"
+                    android:icon="@drawable/ic_fb"
+                    android:title="Facebook" />
+
                 <item
                     android:id="@+id/nav_instagram"
                     android:icon="@drawable/ic_insta"
                     android:title="Instagram" />
-                <item
-                    android:id="@+id/nav_facebook"
-                    android:icon="@drawable/ic_fb"
-                    android:title="Facebook" />
+
                 <item
                     android:id="@+id/nav_twitter"
                     android:icon="@drawable/ic_twitter"
                     android:title="Twitter" />
+                <item
+                    android:id="@+id/nav_youtube"
+                    android:icon="@drawable/ic_youtube"
+                    android:title="YouTube" />
 
             </menu>
         </item>
