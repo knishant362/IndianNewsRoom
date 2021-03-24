@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.e.FragmentE">
 
+
+    <EditText
+        android:id="@+id/etSearchPostE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/search_post"
+        android:textColorHint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <HorizontalScrollView
         android:id="@+id/sv_e_category"
         android:layout_width="match_parent"
@@ -15,7 +29,7 @@
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/etSearchPostE">
 
         <LinearLayout
             android:layout_width="wrap_content"

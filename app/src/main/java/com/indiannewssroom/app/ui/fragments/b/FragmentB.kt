@@ -2,6 +2,8 @@
 package com.indiannewssroom.app.ui.fragments.b
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.indiannewssroom.app.adapters.VerticalAdapter2
 import com.indiannewssroom.app.databinding.FragmentBBinding
+import com.indiannewssroom.app.model.PostData
 import com.indiannewssroom.app.util.Constants.Companion.CG_INVISIBLE
 import com.indiannewssroom.app.util.Constants.Companion.CG_VISIBLE
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_B
@@ -27,6 +30,7 @@ import com.indiannewssroom.app.util.Constants.Companion.viral_news
 import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
+import java.util.*
 
 class FragmentB : Fragment() {
 
@@ -44,6 +48,7 @@ class FragmentB : Fragment() {
     private var postFinish = 1
     private var pageNo = 1
     private var perPage = 20
+    val allPost = mutableListOf<PostData>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?)
@@ -99,6 +104,7 @@ class FragmentB : Fragment() {
             showShimmerEffect()
             chipGroupVisibility(CG_INVISIBLE)
             mAdapter.clearList()
+            allPost.clear()
             this_category = chipCat
             pageNo = 1
             postFinish = 1
@@ -110,8 +116,10 @@ class FragmentB : Fragment() {
                 Status.SUCCESS -> {
 
                     val postdata = it.data
-                    if (postdata!=null)
+                    if (postdata!=null){
+                        allPost.addAll(postdata)
                         mAdapter.setDataOther(postdata)
+                    }
                     chipGroupVisibility(CG_VISIBLE)
                     if (pageNo==1){
                         Log.d("Thiss","htiss")
@@ -146,15 +154,47 @@ class FragmentB : Fragment() {
             }
         })
 
+
+
+        /**Edit text for list filtering list in recycler view*/
+        binding.etSearchPostB.addTextChangedListener (object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                filterPost(s.toString())
+            }
+        })
+
+
+
         binding.refreshDataB.setOnRefreshListener {
             showShimmerEffect()
             chipGroupVisibility(CG_INVISIBLE)
             pageNo = 1
             postFinish = 1
+            allPost.clear()
             mAdapter.clearList()
             mainViewModel.fetchPostSingle(this_category,perPage,pageNo, FRAGMENT_NAME_B)
         }
         return binding.root
+    }
+
+    /** Filter list with EditText entered*/
+    private fun filterPost(text: String) {
+        val filtereList = mutableListOf<PostData>()
+        for (item in allPost){
+            if (item.title?.rendered?.toLowerCase(Locale.ROOT)
+                    ?.contains(text.toLowerCase(Locale.ROOT)) == true
+            ) {
+                filtereList.add(item)
+                Log.d("TTTT", item.title.toString())
+            }
+        }
+        mAdapter.filteredList(filtereList)
     }
 
 

@@ -53,6 +53,7 @@
     <string name="latestnew">खबरें</string>
     <string name="general">सामान्य ज्ञान</string>
     <string name="categories">Categories</string>
+    <string name="search_post">Search post</string>
 
 
     <string-array name="categories">

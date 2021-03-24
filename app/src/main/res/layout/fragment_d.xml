@@ -6,6 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.d.FragmentD">
 
+
+    <EditText
+        android:id="@+id/etSearchPostD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/search_post"
+        android:textColorHint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <HorizontalScrollView
         android:id="@+id/sv_d_category"
         android:layout_width="match_parent"
@@ -15,7 +29,7 @@
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/etSearchPostD">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,7 +84,7 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/food_and_recipes"/>
+                    android:text="@string/food_and_recipes" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_ghrelu_nuskhe"

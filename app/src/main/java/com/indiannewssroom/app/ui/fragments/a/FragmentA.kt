@@ -75,10 +75,10 @@ class FragmentA : Fragment() {
                     if (userScroll && (visibleItemCount + pastVisibleItems) == totalItem && dy > 0) {
                         userScroll = false
                         if (postFinish>=0){
-//                            showSnackBar("Loading")
+                            showSnackBar("Loading")
                             updateRecyclerView()
                         }else{
-//                            showSnackBar("That's all for Now!")
+                            showSnackBar("That's all for Now!")
                         }
                     }
                 }
@@ -118,7 +118,7 @@ class FragmentA : Fragment() {
                     hideShimmerEffect()
                 }
                 Status.LOADING -> {
-//                    showSnackBar("Loading")
+                    showSnackBar("Loading")
                 }
                 Status.ERROR -> {
                     //Handle Error
@@ -132,23 +132,22 @@ class FragmentA : Fragment() {
             showShimmerEffect()
             pageNo = 1
             postFinish = 1
+            allPost.clear()
             mAdapter.clearList()
             mainViewModel.fetchPostSingle(this_category,perPage,pageNo, FRAGMENT_NAME_A)
         }
 
-        binding.etSearchPost.addTextChangedListener (object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
+        /**Edit text for list filtering list in recycler view*/
+        binding.etSearchPostA.addTextChangedListener (object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
             }
 
             override fun afterTextChanged(s: Editable?) {
-
                 filterPost(s.toString())
-
             }
         })
 
@@ -156,10 +155,10 @@ class FragmentA : Fragment() {
         return binding.root
     }
 
+
+    /** Filter list with EditText entered*/
     private fun filterPost(text: String) {
-
         val filtereList = mutableListOf<PostData>()
-
         for (item in allPost){
             if (item.title?.rendered?.toLowerCase(Locale.ROOT)
                     ?.contains(text.toLowerCase(Locale.ROOT)) == true
@@ -169,7 +168,6 @@ class FragmentA : Fragment() {
             }
         }
         mAdapter.filteredList(filtereList)
-
     }
 
 
@@ -193,13 +191,13 @@ class FragmentA : Fragment() {
         }
     }
 
-//
-//    private fun showSnackBar(message: String) {
-//        view?.let {
-//            Snackbar.make(it, message, Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
-//    }
+
+    private fun showSnackBar(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+    }
 
 
     private fun setupRecyclerView() {

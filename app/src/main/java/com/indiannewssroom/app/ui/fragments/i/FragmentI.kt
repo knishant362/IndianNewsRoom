@@ -1,6 +1,8 @@
 package com.indiannewssroom.app.ui.fragments.i
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.indiannewssroom.app.adapters.VerticalAdapter2
 import com.indiannewssroom.app.databinding.FragmentIBinding
+import com.indiannewssroom.app.model.PostData
 import com.indiannewssroom.app.util.Constants.Companion.FRAGMENT_NAME_I
 import com.indiannewssroom.app.util.Constants.Companion.general_knowledge
 import com.indiannewssroom.app.util.Status
 import com.indiannewssroom.app.viewmodel.MainViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
+import java.util.*
 
 class FragmentI : Fragment() {
 
@@ -36,6 +40,7 @@ class FragmentI : Fragment() {
     private var postFinish = 1
     private var pageNo = 1
     private var perPage = 20
+    val allPost = mutableListOf<PostData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,8 +95,10 @@ class FragmentI : Fragment() {
                 Status.SUCCESS -> {
 
                     val postdata = it.data
-                    if (postdata!=null)
+                    if (postdata!=null){
+                        allPost.addAll(postdata)
                         mAdapter.setDataOther(postdata)
+                    }
                     if (pageNo==1){
                         Log.d("Thiss","htiss")
                     }else{
@@ -129,15 +136,50 @@ class FragmentI : Fragment() {
             showShimmerEffect()
             pageNo=1
             postFinish = 1
+            allPost.clear()
             mAdapter.clearList()
             mainViewModel.fetchPostSingle( this_category, perPage, pageNo, FRAGMENT_NAME_I )
         }
+
+
+
+        /**Edit text for list filtering list in recycler view*/
+        binding.etSearchPostI.addTextChangedListener (object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                filterPost(s.toString())
+            }
+        })
+
 
         return binding.root
 
 
 
     }
+
+
+
+    /** Filter list with EditText entered*/
+    private fun filterPost(text: String) {
+        val filtereList = mutableListOf<PostData>()
+        for (item in allPost){
+            if (item.title?.rendered?.toLowerCase(Locale.ROOT)
+                    ?.contains(text.toLowerCase(Locale.ROOT)) == true
+            ) {
+                filtereList.add(item)
+                Log.d("TTTT", item.title.toString())
+            }
+        }
+        mAdapter.filteredList(filtereList)
+    }
+
+
 
     private fun firstApiCall() {
         /**this apiCall will only launch once(at startup)*/
